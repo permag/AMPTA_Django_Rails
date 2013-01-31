@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130131192835) do
+ActiveRecord::Schema.define(:version => 20130131212007) do
 
   create_table "projects", :force => true do |t|
     t.string   "name",        :limit => 20
@@ -55,12 +55,5 @@ ActiveRecord::Schema.define(:version => 20130131192835) do
   end
 
   add_index "users_projects", ["user_id", "project_id"], :name => "index_users_projects_on_user_id_and_project_id"
-
-  create_table "users_tickets", :id => false, :force => true do |t|
-    t.integer "user_id"
-    t.integer "ticket_id"
-  end
-
-  add_index "users_tickets", ["user_id", "ticket_id"], :name => "index_users_tickets_on_user_id_and_ticket_id"
 
 end
