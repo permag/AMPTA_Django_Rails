@@ -4,6 +4,7 @@ class DropUsersTickets < ActiveRecord::Migration
   end
 
   def down
-    raise ActiveRecord::IrreversibleMigration
+    create_table :users_tickets do |t|
+    end
   end
 end

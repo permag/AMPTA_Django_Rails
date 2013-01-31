@@ -1,5 +1,13 @@
 <h1>Home</h1>
 <% @users.each do |u| %>
-	<p><%= u.id %>.
-	<%= "#{u.first_name} #{u.last_name} #{u.email}" %></p>
+	<p>
+		<%= u.id %>.
+		<%= "#{u.first_name} #{u.last_name} #{u.email}" %>
+	</p>
+	<p>
+		<% u.projects.each do |p| %>
+			<%= p.name %><br />
+			<%= p.description %>
+		<% end %>
+	</p>
 <% end %>
