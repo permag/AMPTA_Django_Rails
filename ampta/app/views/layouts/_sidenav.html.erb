@@ -1,5 +1,14 @@
 <div class="sidenav pull-left">
+	<h5>Your projects</h5>
+	<ul>
 	<% @projects.each do |p| %>
-		<%= p.name %>
+		<% if p.owner_id == session[:user_id] %>
+			<% admin = '(admin)' %>
+		<% else  %>
+			<% admin = nil %>
+		<% end %>
+		<li><%= link_to p.name, project_path(p) %> <%= admin %></li>
 	<% end %>
+	</ul>
+	<h5>Your latest tickets</h5>
 </div>

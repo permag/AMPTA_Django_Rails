@@ -9,8 +9,19 @@
       <a id="logo" class="brand" href="./">Ampta</a>
       <div class="nav-collapse collapse">
         <ul class="nav">
+          <li class="<%= 'active' if current_page?(root_path) || current_page?(home_index_path) %>">
+            <%= link_to 'Home', root_path %>
+          </li>
+          <li class="<%= 'active' if current_page?(projects_path) %>">
+            <%= link_to 'All projects', projects_path %>
+          </li>
+          <li class="<%= 'active' if current_page?(new_project_path) %>">
+            <%= link_to 'New project', new_project_path %>
+          </li>
         </ul>
       </div>
+      <span class="sign_out pull-right"><%= link_to 'Sign out', '' %></span>
+      <span class="active_user pull-right"><%= "#{@active_user.first_name} #{@active_user.last_name}" %></span>
 
     </div>
   </div>

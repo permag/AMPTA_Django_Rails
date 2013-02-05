@@ -18,6 +18,7 @@ u2 = User.create(:first_name => "Uhno",
                  :email => "Bluhää@atrihs.seh",
                  :password => "123456")
 
+
 Project.delete_all
 p1 = Project.create(:name => "Första projektet",
                     :description => "En text som beskriver ett projekt...",
@@ -31,3 +32,10 @@ p2 = Project.create(:name => "Andra projektet",
 u1.projects << p1
 u1.projects << p2
 u2.projects << p1
+
+
+Status.delete_all
+Status.create([{ :status_name => "New feature" }, 
+               { :status_name => "To-do bug" }, 
+               { :status_name => "Won’t fix" }, 
+               { :status_name => "Closed" }])

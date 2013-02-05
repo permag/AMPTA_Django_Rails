@@ -4,6 +4,8 @@ Ampta::Application.routes.draw do
   # match '/home', :controller => 'home', :action => 'index'
   match '/home' => "home#index"
 
+  resources :projects
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
