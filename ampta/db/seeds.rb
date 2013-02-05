@@ -22,10 +22,14 @@ u2 = User.create(:first_name => "Uhno",
 Project.delete_all
 p1 = Project.create(:name => "Första projektet",
                     :description => "En text som beskriver ett projekt...",
+                    :start_date => DateTime.now,
+                    :end_date => DateTime.now,
                     :owner_id => u1.id)
 
 p2 = Project.create(:name => "Andra projektet",
                     :description => "En text som beskriver det andra projektet...",
+                    :start_date => DateTime.now,
+                    :end_date => DateTime.now,
                     :owner_id => u1.id)
 
 

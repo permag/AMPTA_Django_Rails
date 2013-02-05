@@ -1,15 +1,19 @@
 <%= render :partial => "layouts/sidenav" %>
 <div class="main pull-left">
 	<h1>New project</h1>
-	<%= form_for @project do |f| %>
+	<%= form_for @project, :html => { :class => "project_form" } do |f| %>
 		<%= f.label :name %>
-		<%= f.text_field :name %><br />
+		<%= f.text_field :name, :length => { :minimum => 3, :maximum => 20} %><br />
 		<%= f.label :description %>
-		<%= f.text_field :description %><br />
-		<%= f.label :start_date %>
-		<%= f.text_field :start_date %><br />
-		<%= f.label :end_date %>
-		<%= f.text_field :end_date %><br />
+		<%= f.text_area :description, :cols => 30, :rows => 20 %><br />
+		<div class="form_date_option">
+			<%= f.label :start_date, :cols => 22 %>
+			<%= f.date_select :start_date %><br />
+			<%= f.label :end_date %>
+			<%= f.date_select :end_date %><br />
+		</div>
+		<%= f.label :status %>
+		<%= f.select :id, options_from_collection_for_select(Status.all, :id, :status_name) %><br /><br />
 		<%= f.submit %>
 	<% end %>
 </div>
