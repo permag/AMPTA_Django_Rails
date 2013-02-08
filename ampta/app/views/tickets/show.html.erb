@@ -4,5 +4,8 @@
 	<%= @ticket.name %>
 
 	<p>Owner</p>
-	<%= @ticket.user %>
+	<%= @ticket.user.first_name %>
+
+	<%= link_to '[x]', @ticket, :confirm => 'Are you sure you want to delete this ticket?', 
+									:method => :delete %>
 </div>

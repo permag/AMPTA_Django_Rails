@@ -25,4 +25,13 @@ class TicketsController < ApplicationController
       end
     end
   end
+
+  def destroy
+    @ticket = Ticket.find(params[:id])
+    @ticket.delete
+
+    respond_to do |format|
+      format.html { redirect_to project_path(@ticket.project), :notice => 'Deleted' }
+    end
+  end
 end

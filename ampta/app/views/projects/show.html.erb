@@ -16,7 +16,9 @@
 	</ul>
 
 	<p>Tickets</p>
+	<ul>
 	<% @project.tickets.each do |t| %>
-		<%= link_to t.name, project_ticket_path(@project, t) %>
+		<li><%= link_to t.name, project_ticket_path(@project, t) %></li>
 	<% end %>
+	</ul>
 </div>

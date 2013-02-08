@@ -10,5 +10,10 @@
 		<li><%= link_to p.name, project_path(p) %> <%= admin %></li>
 	<% end %>
 	</ul>
-	<h5>Your latest tickets</h5>
+	<h5>Your latest <%= @tickets_nav.size %> tickets</h5>
+	<ul>
+	<% @tickets_nav.each do |t|  %>
+		<li><%= link_to t.name, project_ticket_path(t.project, t) %></li>
+	<% end %>
+	</ul>
 </div>

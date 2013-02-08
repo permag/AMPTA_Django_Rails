@@ -14,7 +14,8 @@ class ApplicationController < ActionController::Base
   def sidenav
     # get logged in user
     @user = User.find(self.user_logged_in)
-    # get projects for logged in user
+    # get projects and tickets for logged in user
     @projects_nav = @user.projects 
+    @tickets_nav = @user.tickets.all(:limit => 10)
   end
 end
