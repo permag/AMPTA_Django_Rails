@@ -1,9 +1,7 @@
 <%= render :partial => "layouts/sidenav" %>
 <div class="main pull-left">
-	<h1>Projects</h1>
-	<ul>
-	<% @projects.each do |p| %>
-		<li><%= p.name %></li>
+	<h1>Tickets for project</h1>
+	<% @tickets.each do |t| %>
+		<%= t.name %>
 	<% end %>
-	</ul>
 </div>

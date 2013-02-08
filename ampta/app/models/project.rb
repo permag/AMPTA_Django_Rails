@@ -10,7 +10,7 @@ class Project < ActiveRecord::Base
          
   
   def project_users=(project_users)
-    # define attribute :project_users
+    # empty. defines attribute :project_users
   end
 
 end

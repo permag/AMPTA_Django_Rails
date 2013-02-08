@@ -2,7 +2,7 @@ class ProjectsController < ApplicationController
   before_filter :sidenav
   
   def index
-    @projects = Project.all
+    @projects = Project.all # order...: Project.order("id DESC").all
   end
 
   def show
@@ -29,7 +29,7 @@ class ProjectsController < ApplicationController
       if @project.save
         u = User.find(session[:user_id])
         u.projects << @project
-        format.html { redirect_to new_project_path(@project), :notice => "Project was created." }
+        format.html { redirect_to project_path(@project), :notice => "Project was created." }
       else
         format.html { render :action => "new" }
       end

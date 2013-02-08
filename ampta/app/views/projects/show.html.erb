@@ -3,8 +3,20 @@
 <div class="main pull-left">
 	<h1>Project</h1>
 	<p id="notice"><%= notice %></p>
-	<p><%= @project.name %></p>
+	<h3><%= @project.name %></h3>
 	<p><%= @project.description %></p>
 	<p><%= @project.start_date %></p>
 	<p><%= @project.end_date %></p>
+
+	<h4>Users in this project:</h4>
+	<ul>
+	<% @project.users.each do |u| %>
+		<li><%= link_to "#{u.first_name} #{u.last_name}", user_path(u) %></li>
+	<% end %>
+	</ul>
+
+	<p>Tickets</p>
+	<% @project.tickets.each do |t| %>
+		<%= link_to t.name, project_ticket_path(@project, t) %>
+	<% end %>
 </div>
