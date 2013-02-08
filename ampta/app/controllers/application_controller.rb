@@ -15,6 +15,6 @@ class ApplicationController < ActionController::Base
     # get logged in user
     @user = User.find(self.user_logged_in)
     # get projects for logged in user
-    @projects = @user.projects 
+    @projects_nav = @user.projects 
   end
 end

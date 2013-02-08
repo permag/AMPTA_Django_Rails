@@ -10,10 +10,15 @@
 			<%= f.label :start_date, :cols => 22 %>
 			<%= f.date_select :start_date %><br />
 			<%= f.label :end_date %>
-			<%= f.date_select :end_date %><br />
+			<%= f.date_select :end_date %><br /><br />
 		</div>
-		<%= f.label :status %>
-		<%= f.select :id, options_from_collection_for_select(Status.all, :id, :status_name) %><br /><br />
+
+		<% @users.each do |u| %>
+			<%= "#{u.first_name} #{u.last_name}" %>
+			<%= check_box_tag "project[project_users][]", u.id %>
+		<% end %>
+		<br /><br />
+
 		<%= f.submit %>
 	<% end %>
 </div>

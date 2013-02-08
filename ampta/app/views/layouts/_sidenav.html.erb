@@ -1,7 +1,7 @@
 <div class="sidenav pull-left">
 	<h5>Your projects</h5>
 	<ul>
-	<% @projects.each do |p| %>
+	<% @projects_nav.each do |p| %>
 		<% if p.owner_id == session[:user_id] %>
 			<% admin = '(admin)' %>
 		<% else  %>

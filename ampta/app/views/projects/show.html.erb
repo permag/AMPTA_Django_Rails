@@ -1,5 +1,10 @@
 <%= render :partial => "layouts/sidenav" %>
+
 <div class="main pull-left">
 	<h1>Project</h1>
-	<%= @project.name %>
+	<p id="notice"><%= notice %></p>
+	<p><%= @project.name %></p>
+	<p><%= @project.description %></p>
+	<p><%= @project.start_date %></p>
+	<p><%= @project.end_date %></p>
 </div>
