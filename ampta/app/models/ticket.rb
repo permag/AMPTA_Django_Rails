@@ -4,9 +4,10 @@ class Ticket < ActiveRecord::Base
   belongs_to :project
   belongs_to :status
 
-  validates_presence_of :name, :description, :start_date, :end_date
-
   validates :name,
-            :length => { :minimum => 3, :maximum => 30 }
+            :presence => true,
+            :length => { :in => 3..30, :allow_blank => true }
+
+  validates_presence_of :description, :start_date, :end_date
 
 end

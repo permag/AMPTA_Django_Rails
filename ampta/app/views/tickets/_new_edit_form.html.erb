@@ -1,3 +1,7 @@
+<% @ticket.errors.full_messages.each do |msg| %>
+<div class="validationMsg"><h3>Validation errors:</h3><%= msg %></div>
+<% end %>
+
 <%= form_for @ticket, :html => { :class => "project_form" } do |f| %>
 	<%= f.label :name %>
 	<%= f.text_field :name, :length => { :minimum => 3, :maximum => 30} %><br />
