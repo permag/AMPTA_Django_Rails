@@ -1,11 +1,19 @@
 <%= render :partial => "layouts/sidenav" %>
 <div class="main pull-left">
 	<h1>Ticket</h1>
+	<p id="notice"><%= notice %></p>
 	<%= @ticket.name %>
 
-	<p>Owner</p>
+	<h4>Status</h4>
+	<%= @ticket.status.status_name %>
+
+	<h4>Owner</h4>
 	<%= @ticket.user.first_name %>
 
-	<%= link_to '[x]', @ticket, :confirm => 'Are you sure you want to delete this ticket?', 
-									:method => :delete %>
+	<p>
+		<%= link_to 'Edit ticket', edit_project_ticket_path(@ticket.project, @ticket) %>
+	</p>
+	<p>
+		<%= link_to 'Delete ticket', @ticket, :confirm => 'Are you sure you want to delete this ticket?', :method => :delete %>
+	</p>
 </div>

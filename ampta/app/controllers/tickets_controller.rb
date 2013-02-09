@@ -26,12 +26,27 @@ class TicketsController < ApplicationController
     end
   end
 
+  def edit
+    @ticket = Ticket.find(params[:id])
+  end
+
+  def update
+    @ticket = Ticket.find(params[:id])
+    respond_to do |format|
+      if @ticket.update_attributes(params[:ticket])
+        format.html { redirect_to project_ticket_path(@ticket.project, @ticket), :notice => "Ticket was updated." }
+      else
+        format.html { render :action => "edit" }
+      end
+    end
+  end
+
   def destroy
     @ticket = Ticket.find(params[:id])
-    @ticket.delete
+    @ticket.destroy
 
     respond_to do |format|
-      format.html { redirect_to project_path(@ticket.project), :notice => 'Deleted' }
+      format.html { redirect_to project_path(@ticket.project), :notice => 'Ticket was deleted.' }
     end
   end
 end

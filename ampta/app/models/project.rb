@@ -1,7 +1,7 @@
 class Project < ActiveRecord::Base
   attr_accessible :name, :description, :start_date, :end_date, :project_users
   has_and_belongs_to_many :users
-  has_many :tickets
+  has_many :tickets, :dependent => :destroy
 
   validates_presence_of :name, :description, :start_date, :end_date
   

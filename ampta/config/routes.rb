@@ -2,7 +2,9 @@ Ampta::Application.routes.draw do
   get "home/index"
 
   # match '/home', :controller => 'home', :action => 'index'
-  match '/home' => "home#index"
+  match "/home" => "home#index"
+
+  match "/home/logout" => "home#logout"
 
   resources :users
   
