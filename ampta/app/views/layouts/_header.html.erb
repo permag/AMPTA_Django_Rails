@@ -12,6 +12,9 @@
           <li class="<%= 'active' if current_page?(root_path) || current_page?(home_index_path) %>">
             <%= link_to 'Home', root_path %>
           </li>
+          <li class="<%= 'active' if current_page?(users_path) %>">
+            <%= link_to 'All users', users_path %>
+          </li>
           <li class="<%= 'active' if current_page?(projects_path) %>">
             <%= link_to 'All projects', projects_path %>
           </li>

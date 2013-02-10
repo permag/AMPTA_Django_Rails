@@ -2,6 +2,7 @@ class User < ActiveRecord::Base
   attr_accessible :first_name, :last_name, :email, :password
   has_and_belongs_to_many :projects
   has_many :tickets
+  has_secure_password
 
   validates_presence_of :password
 
@@ -19,4 +20,10 @@ class User < ActiveRecord::Base
 
   validates_format_of :email, 
                       :with => /^(|(([A-Za-z0-9]+_+)|([A-Za-z0-9]+\-+)|([A-Za-z0-9]+\.+)|([A-Za-z0-9]+\++))*[A-Za-z0-9]+@((\w+\-+)|(\w+\.))*\w{1,63}\.[a-zA-Z]{2,6})$/i
+
+  
+  def self.authenticate(email, password)
+    find_by_email(email).try(:authenticate, password)
+  end
+
 end

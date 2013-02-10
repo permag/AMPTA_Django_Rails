@@ -5,7 +5,7 @@
 	<h1>Projects</h1>
 	<ul>
 	<% @projects.each do |p| %>
-		<li><%= p.name %></li>
+		<li><%= link_to p.name, project_path(p) %></li>
 	<% end %>
 	</ul>
 </div>

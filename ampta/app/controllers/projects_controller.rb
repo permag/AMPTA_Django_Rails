@@ -19,16 +19,17 @@ class ProjectsController < ApplicationController
     @project = Project.new(params[:project])
     @project.owner_id = session[:user_id]
 
-    if params[:project][:project_users]
-      params[:project][:project_users].each do |id| 
-        @project.users << User.find(id)
-      end
-    end
 
     respond_to do |format|
       if @project.save
         u = User.find(session[:user_id])
         u.projects << @project
+
+        if params[:project][:project_users]
+          params[:project][:project_users].each do |id| 
+            @project.users << User.find(id)
+          end
+        end
         format.html { redirect_to project_path(@project), :notice => "Project was created." }
       else
         format.html { render :action => "new" }
@@ -47,6 +48,17 @@ class ProjectsController < ApplicationController
 
     respond_to do |format|
       if @project.update_attributes(params[:project])
+        # clear join table
+        @project.users.clear
+        # current user
+        u = User.find(session[:user_id])
+        u.projects << @project
+        if params[:project][:project_users]
+          # add users to join table
+          params[:project][:project_users].each do |id| 
+            @project.users << User.find(id)
+          end
+        end
         format.html { redirect_to project_path(@project), :notice => "Project was updated." }
       else
         format.html { render :action => "edit" }
