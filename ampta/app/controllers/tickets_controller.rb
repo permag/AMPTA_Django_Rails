@@ -1,4 +1,5 @@
 class TicketsController < ApplicationController
+  before_filter :confirm_user, :only => [:edit, :update, :destroy]
   before_filter :sidenav
 
   def index
@@ -7,6 +8,11 @@ class TicketsController < ApplicationController
 
   def show
     @ticket = Ticket.find(params[:id])
+
+    # is ticket or project owner
+    if @ticket.user_id == session[:user_id] || @ticket.project.owner_id == session[:user_id]
+      @owner_menu = true
+    end
   end
 
   def new
@@ -49,4 +55,18 @@ class TicketsController < ApplicationController
       format.html { redirect_to project_path(@ticket.project), :notice => 'Ticket was deleted.' }
     end
   end
+
+  ##
+  # check to see if user is ticket owner or project owner
+  #
+  def confirm_user
+    unless Ticket.find(params[:id]).user_id == session[:user_id] || Ticket.find(params[:id]).project.owner_id == session[:user_id]
+      flash[:notice] = "You don't have the permission to do that."
+      redirect_to home_index_path
+      return false
+    else
+      return true
+    end
+  end
+
 end

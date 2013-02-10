@@ -14,10 +14,12 @@
 	<h4>Owner</h4>
 	<p><%= link_to "#{@ticket.user.first_name} #{@ticket.user.last_name}", user_path(@ticket.user) %></p>
 
-	<p>
-		<%= link_to 'Edit ticket', edit_project_ticket_path(@ticket.project, @ticket) %>
-	</p>
-	<p>
-		<%= link_to 'Delete ticket', @ticket, :confirm => 'Are you sure you want to delete this ticket?', :method => :delete %>
-	</p>
+	<% if @owner_menu %>
+		<p>
+			<%= link_to 'Edit ticket', edit_project_ticket_path(@ticket.project, @ticket) %>
+		</p>
+		<p>
+			<%= link_to 'Delete ticket', @ticket, :confirm => 'Are you sure you want to delete this ticket?', :method => :delete %>
+		</p>
+	<% end %>
 </div>

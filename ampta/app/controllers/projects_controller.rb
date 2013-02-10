@@ -1,12 +1,23 @@
 class ProjectsController < ApplicationController
+  before_filter :confirm_user, :only => [:edit, :update, :destroy]
   before_filter :sidenav
-  
+
   def index
     @projects = Project.all # order...: Project.order("id DESC").all
   end
 
   def show
     @project = Project.find(params[:id])
+
+    # is owner?
+    if @project.owner_id == session[:user_id]
+      @owner_menu = true
+    end
+
+    # belongs to project?
+    if @project.users.exists?(session[:user_id])
+      @belongs_menu = true
+    end
   end
 
   def new
@@ -78,6 +89,19 @@ class ProjectsController < ApplicationController
   def get_users_except_current
     current_user = User.find(session[:user_id])
     @users = (current_user.blank? ? User.all : User.find(:all, :conditions => ["id != ?", current_user.id]))
+  end
+
+  ##
+  # check to see if user is project owner
+  #
+  def confirm_user
+    unless Project.find(params[:id]).owner_id == session[:user_id]
+      flash[:notice] = "You don't have the permission to do that."
+      redirect_to home_index_path
+      return false
+    else
+      return true
+    end
   end
 
 end
