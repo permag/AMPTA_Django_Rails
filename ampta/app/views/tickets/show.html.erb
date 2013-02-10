@@ -2,15 +2,17 @@
 
 <%= render :partial => "layouts/sidenav" %>
 <div class="main pull-left">
-	<h1>Ticket</h1>
+	<h1>Ticket : <%= @ticket.name %></h1>
 	<p id="notice"><%= notice %></p>
-	<%= @ticket.name %>
+	
+	<h4>Description</h4>
+	<p><%= @ticket.description %></p>
 
 	<h4>Status</h4>
-	<%= @ticket.status.status_name %>
+	<p><%= @ticket.status.status_name %></p>
 
 	<h4>Owner</h4>
-	<%= @ticket.user.first_name %>
+	<p><%= link_to "#{@ticket.user.first_name} #{@ticket.user.last_name}", user_path(@ticket.user) %></p>
 
 	<p>
 		<%= link_to 'Edit ticket', edit_project_ticket_path(@ticket.project, @ticket) %>

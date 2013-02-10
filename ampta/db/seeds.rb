@@ -13,29 +13,29 @@ u1 = User.create(:first_name => "Per",
                  :email => "pm222br@student.lnu.se",
                  :password => "123456")
 
-u2 = User.create(:first_name => "Uhno", 
-                 :last_name => "Johanssohn", 
-                 :email => "Bluhää@atrihs.seh",
-                 :password => "123456")
+# u2 = User.create(:first_name => "Uhno", 
+#                  :last_name => "Johanssohn", 
+#                  :email => "Bluhää@atrihs.seh",
+#                  :password => "123456")
 
 
-Project.delete_all
-p1 = Project.create(:name => "Första projektet",
-                    :description => "En text som beskriver ett projekt...",
-                    :start_date => DateTime.now,
-                    :end_date => DateTime.now,
-                    :owner_id => u1.id)
+# Project.delete_all
+# p1 = Project.create(:name => "Första projektet",
+#                     :description => "En text som beskriver ett projekt...",
+#                     :start_date => DateTime.now,
+#                     :end_date => DateTime.now,
+#                     :owner_id => u1.id)
 
-p2 = Project.create(:name => "Andra projektet",
-                    :description => "En text som beskriver det andra projektet...",
-                    :start_date => DateTime.now,
-                    :end_date => DateTime.now,
-                    :owner_id => u1.id)
+# p2 = Project.create(:name => "Andra projektet",
+#                     :description => "En text som beskriver det andra projektet...",
+#                     :start_date => DateTime.now,
+#                     :end_date => DateTime.now,
+#                     :owner_id => u1.id)
 
 
-u1.projects << p1
-u1.projects << p2
-u2.projects << p1
+# u1.projects << p1
+# u1.projects << p2
+# u2.projects << p1
 
 
 Status.delete_all
