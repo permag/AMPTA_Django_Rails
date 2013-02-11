@@ -10,4 +10,12 @@ class Ticket < ActiveRecord::Base
 
   validates_presence_of :description, :start_date, :end_date
 
+  validate :validate_end_date_before_start_date
+
+  def validate_end_date_before_start_date
+    if end_date && start_date
+      errors.add(:end_date, "must be greater than start date.") if end_date < start_date
+    end
+  end
+
 end

@@ -3,9 +3,22 @@
 <%= render :partial => "layouts/sidenav" %>
 <div class="main pull-left">
 	<h1>Projects</h1>
+
+	<h3>Projects involving you</h3>
 	<ul>
 	<% @projects.each do |p| %>
-		<li><%= link_to p.name, project_path(p) %></li>
+		<% if p.users.exists?(session[:user_id])  %>
+			<li><%= link_to p.name, project_path(p) %></li>
+		<% end %>
+	<% end %>
+	</ul>
+
+	<h3>Other projects</h3>
+	<ul>
+	<% @projects.each do |p| %>
+		<% if !p.users.exists?(session[:user_id]) %>
+			<li><%= link_to p.name, project_path(p) %></li>
+		<% end %>
 	<% end %>
 	</ul>
 </div>

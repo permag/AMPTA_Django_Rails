@@ -16,6 +16,8 @@ Ampta::Application.routes.draw do
   resources :projects do
     resources :tickets
   end
+
+  # resources :tickets, :only => [:index, :show]
   resources :tickets
   
 

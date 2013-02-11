@@ -1,7 +1,8 @@
 <% content_for :title, "Edit Ticket" %>
+<% @the_action = "update" %>
 
 <%= render :partial => "layouts/sidenav" %>
 <div class="main pull-left">
-	<h1>New ticket</h1>
+	<h1>Edit ticket</h1>
 	<%= render :partial => "new_edit_form"  %>
 </div>

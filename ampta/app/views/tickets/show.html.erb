@@ -4,6 +4,9 @@
 <div class="main pull-left">
 	<h1>Ticket : <%= @ticket.name %></h1>
 	<p id="notice"><%= notice %></p>
+
+	<h4>Project</h4>
+	<p><%= link_to @ticket.project.name, project_path(@ticket.project) %></p>
 	
 	<h4>Description</h4>
 	<p><%= @ticket.description %></p>
@@ -15,10 +18,10 @@
 	<p><%= link_to "#{@ticket.user.first_name} #{@ticket.user.last_name}", user_path(@ticket.user) %></p>
 
 	<% if @owner_menu %>
-		<p>
+		<p class="btn btn-small">
 			<%= link_to 'Edit ticket', edit_project_ticket_path(@ticket.project, @ticket) %>
 		</p>
-		<p>
+		<p class="btn btn-small">
 			<%= link_to 'Delete ticket', @ticket, :confirm => 'Are you sure you want to delete this ticket?', :method => :delete %>
 		</p>
 	<% end %>
