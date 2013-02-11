@@ -3,6 +3,14 @@
 
 <%= render :partial => "layouts/sidenav" %>
 <div class="main pull-left">
-	<h1>Edit ticket</h1>
+	<ul class="breadcrumb">
+	  <li><%= link_to "Home", home_path %> <span class="divider">/</span></li>
+	  <li><%= link_to "Projects", projects_path %> <span class="divider">/</span></li>
+	  <li><%= link_to @ticket.project.name, project_path(@ticket.project) %> <span class="divider">/</span></li>
+	  <li><%= link_to "Tickets", project_tickets_path(@ticket.project) %> <span class="divider">/</span></li>
+	  <li class="active"><%= @ticket.name %></li>
+	</ul>
+
+	<h3>Edit ticket</h3>
 	<%= render :partial => "new_edit_form"  %>
 </div>

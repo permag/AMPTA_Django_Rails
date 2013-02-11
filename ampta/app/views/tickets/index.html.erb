@@ -2,8 +2,15 @@
 
 <%= render :partial => "layouts/sidenav" %>
 <div class="main pull-left">
-	<h1>Tickets for project</h1>
-	<% @tickets.each do |t| %>
-		<%= t.name %>
+
+	<h3>Tickets for project <%= Project.find(params[:project_id]).name %></h3>
+	<% if @tickets.size > 0 %>
+		<ul>
+		<% @tickets.each do |t| %>
+			<li><%= link_to t.name, ticket_path(t) %></li>
+		<% end %>
+		</ul>
+	<% else %>
+		<p>No tickets.</p>
 	<% end %>
 </div>

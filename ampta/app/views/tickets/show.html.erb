@@ -1,15 +1,25 @@
 <% content_for :title, "Ticket" %>
 
 <%= render :partial => "layouts/sidenav" %>
-<div class="main pull-left">
-	<h1>Ticket : <%= @ticket.name %></h1>
-	<p id="notice"><%= notice %></p>
 
-	<h4>Project</h4>
-	<p><%= link_to @ticket.project.name, project_path(@ticket.project) %></p>
+<div class="main pull-left">
+	<ul class="breadcrumb">
+	  <li><%= link_to "Home", home_path %> <span class="divider">/</span></li>
+	  <li><%= link_to "Projects", projects_path %> <span class="divider">/</span></li>
+	  <li><%= link_to @ticket.project.name, project_path(@ticket.project) %> <span class="divider">/</span></li>
+	  <li><%= link_to "Tickets", project_tickets_path(@ticket.project) %> <span class="divider">/</span></li>
+	  <li class="active"><%= @ticket.name %></li>
+	</ul>
+
+	<h3><%= @ticket.name %></h3>
+	<p id="notice"><%= notice %></p>
 	
 	<h4>Description</h4>
 	<p><%= @ticket.description %></p>
+
+	<h4>Time period</h4>
+	<p><strong>Start:</strong> <%= @ticket.start_date.to_date.to_formatted_s(:long_ordinal) %></p>
+	<p><strong>End:</strong> <%= @ticket.end_date.to_date.to_formatted_s(:long_ordinal) %></p>
 
 	<h4>Status</h4>
 	<p><%= @ticket.status.status_name %></p>

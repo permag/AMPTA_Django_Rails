@@ -3,7 +3,14 @@
 <%= render :partial => "layouts/sidenav" %>
 
 <div class="main pull-left">
-	<h1>Project : <%= @project.name %></h1>
+	<ul class="breadcrumb">
+	  <li><%= link_to "Home", home_path %> <span class="divider">/</span></li>
+	  <li><%= link_to "Projects", projects_path %> <span class="divider">/</span></li>
+	  <li class="active"><%= @project.name %> <span class="divider">/</span></li>
+	  <li><%= link_to "Tickets", project_tickets_path(@project) %> </span></li>
+	</ul>
+
+	<h3><%= @project.name %></h3>
 	<p id="notice"><%= notice %></p>
 
 	<% if @belongs_menu  %>
@@ -12,8 +19,13 @@
 
 	<h4>Description</h4>
 	<p><%= @project.description %></p>
-	<p><%= @project.start_date %></p>
-	<p><%= @project.end_date %></p>
+
+	<h4>Time period</h4>
+	<p><strong>Start:</strong> <%= @project.start_date.to_date.to_formatted_s(:long_ordinal) %></p>
+	<p><strong>End:</strong> <%= @project.end_date.to_date.to_formatted_s(:long_ordinal) %></p>
+
+	<h4>Project owner</h4>
+	<%= link_to "#{@project_owner.first_name} #{@project_owner.last_name}", user_path(@project_owner) %>
 
 	<h4>Users in this project:</h4>
 	<ul>
@@ -22,12 +34,17 @@
 	<% end %>
 	</ul>
 
-	<p>Tickets</p>
-	<ul>
-	<% @project.tickets.each do |t| %>
-		<li><%= link_to t.name, project_ticket_path(@project, t) %></li>
+	<h4>Tickets</h4>
+	<% if @project.tickets.size > 0 %>
+		<ul>
+		<% @project.tickets.each do |t| %>
+			<li><%= link_to t.name, project_ticket_path(@project, t) %></li>
+		<% end %>
+		</ul>
+	<% else %>
+		<p>No tickets.</p>
 	<% end %>
-	</ul>
+
 
 	<% if @owner_menu %> 
 		<p class="btn btn-small">

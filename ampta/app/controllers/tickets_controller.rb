@@ -3,7 +3,7 @@ class TicketsController < ApplicationController
   before_filter :sidenav
 
   def index
-    @tickets = Ticket.where(params[:id])
+    @tickets = Ticket.where("project_id == ?", params[:project_id])
   end
 
   def show
@@ -25,7 +25,7 @@ class TicketsController < ApplicationController
 
     respond_to do |format|
       if @ticket.save
-        format.html { redirect_to project_path(@ticket.project), :notice => "Ticket was created." }
+        format.html { redirect_to project_path(@ticket.project), :notice => "Ticket \"#{@ticket.name}\" was created." }
       else
         format.html { render :action => "new" }
       end
@@ -40,7 +40,7 @@ class TicketsController < ApplicationController
     @ticket = Ticket.find(params[:id])
     respond_to do |format|
       if @ticket.update_attributes(params[:ticket])
-        format.html { redirect_to project_ticket_path(@ticket.project, @ticket), :notice => "Ticket was updated." }
+        format.html { redirect_to project_ticket_path(@ticket.project, @ticket), :notice => "Ticket \"#{@ticket.name}\" was updated." }
       else
         format.html { render :action => "edit" }
       end
