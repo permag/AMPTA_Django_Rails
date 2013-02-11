@@ -1,5 +1,5 @@
 class ProjectsController < ApplicationController
-  before_filter :confirm_user, :only => [:edit, :update, :destroy]
+  before_filter :confirm_user, :only => [:edit, :update, :create, :destroy]
   before_filter :sidenav
 
   def index
@@ -98,7 +98,7 @@ class ProjectsController < ApplicationController
   def confirm_user
     unless Project.find(params[:id]).owner_id == session[:user_id]
       flash[:notice] = "You don't have the permission to do that."
-      redirect_to home_index_path
+      redirect_to home_error_path
       return false
     else
       return true

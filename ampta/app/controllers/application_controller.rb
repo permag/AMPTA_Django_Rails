@@ -38,4 +38,5 @@ class ApplicationController < ActionController::Base
     @projects_nav = @user.projects.order("id DESC")
     @tickets_nav = @user.tickets.order("id DESC").all(:limit => 10)
   end
+  
 end

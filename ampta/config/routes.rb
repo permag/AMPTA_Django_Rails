@@ -11,6 +11,8 @@ Ampta::Application.routes.draw do
   match "/login" => "home#login"
   match "/logout" => "home#logout"
 
+  match "/home/error" => "home#error"
+
   resources :users
   
   resources :projects do

@@ -2,7 +2,11 @@ class HomeController < ApplicationController
   before_filter :sidenav
   
   def index
-   # @users = User.all
+   # ...
+  end
+
+  def error
+    # ...
   end
 
 end

@@ -1,5 +1,6 @@
 class TicketsController < ApplicationController
-  before_filter :confirm_user, :only => [:edit, :update, :destroy]
+  before_filter :confirm_user_new, :only => [:new, :create]
+  before_filter :confirm_user_edit, :only => [:edit, :update, :destroy]
   before_filter :sidenav
 
   def index
@@ -59,10 +60,23 @@ class TicketsController < ApplicationController
   ##
   # check to see if user is ticket owner or project owner
   #
-  def confirm_user
-    unless Ticket.find(params[:id]).user_id == session[:user_id] || Ticket.find(params[:id]).project.owner_id == session[:user_id]
+  def confirm_user_edit
+    project = Project.find(params[:project_id])
+    ticket =  Ticket.find(params[:id])
+    unless ticket.user_id == session[:user_id] || ticket.project.owner_id == session[:user_id] || project.owner_id == session[:user_id]
       flash[:notice] = "You don't have the permission to do that."
-      redirect_to home_index_path
+      redirect_to home_error_path
+      return false
+    else
+      return true
+    end
+  end
+
+  def confirm_user_new
+    project = Project.find(params[:project_id]) 
+    unless project.owner_id == session[:user_id] || project.users.exists?(session[:user_id])
+      flash[:notice] = "You don't have the permission to do that."
+      redirect_to home_error_path
       return false
     else
       return true
