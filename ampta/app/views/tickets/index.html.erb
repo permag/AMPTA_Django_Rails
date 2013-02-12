@@ -7,7 +7,7 @@
 	<% if @tickets.size > 0 %>
 		<ul>
 		<% @tickets.each do |t| %>
-			<li><%= link_to t.name, ticket_path(t) %></li>
+			<li><%= link_to t.name, project_ticket_path(t.project, t) %></li>
 		<% end %>
 		</ul>
 	<% else %>

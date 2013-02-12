@@ -1,5 +1,5 @@
 class ProjectsController < ApplicationController
-  before_filter :confirm_user, :only => [:edit, :update, :create, :destroy]
+  before_filter :confirm_user, :only => [:edit, :update, :destroy]
   before_filter :sidenav
 
   def index

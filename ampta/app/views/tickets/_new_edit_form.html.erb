@@ -15,7 +15,12 @@
 	</div>
 
 	<%= f.label :status %>
-	<%= f.select :status_id, options_from_collection_for_select(Status.all, :id, :status_name) %><br /><br />
+	<% if @ticket.id %>
+		<%= f.select :status_id, options_from_collection_for_select(Status.all, :id, :status_name, :selected => @ticket.status.id) %>
+	<% else %>
+		<%= f.select :status_id, options_from_collection_for_select(Status.all, :id, :status_name) %>
+	<% end %>
+	<br /><br />
 
 	<%= f.hidden_field :project_id, :value => params[:project_id] %>
 	<%= f.submit %>

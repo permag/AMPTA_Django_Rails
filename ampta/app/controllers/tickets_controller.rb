@@ -4,7 +4,7 @@ class TicketsController < ApplicationController
   before_filter :sidenav
 
   def index
-    @tickets = Ticket.where("project_id == ?", params[:project_id])
+    @tickets = Ticket.where("project_id = ?", params[:project_id])
   end
 
   def show
@@ -61,9 +61,8 @@ class TicketsController < ApplicationController
   # check to see if user is ticket owner or project owner
   #
   def confirm_user_edit
-    project = Project.find(params[:project_id])
     ticket =  Ticket.find(params[:id])
-    unless ticket.user_id == session[:user_id] || ticket.project.owner_id == session[:user_id] || project.owner_id == session[:user_id]
+    unless ticket.user_id == session[:user_id] || ticket.project.owner_id == session[:user_id]
       flash[:notice] = "You don't have the permission to do that."
       redirect_to home_error_path
       return false

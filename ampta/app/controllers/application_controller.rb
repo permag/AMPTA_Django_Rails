@@ -1,6 +1,6 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
-  before_filter :confirm_logged_in, :except => [:logout, :login]
+  before_filter :confirm_logged_in, :except => [:logout, :login, :do_login]
   before_filter :headernav
 
   def confirm_logged_in
@@ -14,7 +14,8 @@ class ApplicationController < ActionController::Base
   end
 
   def login
-   render :layout => 'login_page'
+    @user = User.new
+    render :layout => 'login_page'
   end
 
   def logout
@@ -24,19 +25,35 @@ class ApplicationController < ActionController::Base
 
   def user_logged_in
     # test user id
-    session[:user_id] = 1
+    session[:user_id]  #= nil
   end
 
   def headernav
-    @active_user = User.find(self.user_logged_in)
+    @active_user = User.find(self.user_logged_in) if user_logged_in
   end
   
   def sidenav
-    # get logged in user
-    @user = User.find(self.user_logged_in)
-    # get projects and tickets for logged in user
-    @projects_nav = @user.projects.order("id DESC")
-    @tickets_nav = @user.tickets.order("id DESC").all(:limit => 10)
+    if user_logged_in
+      # get logged in user
+      @user = User.find(self.user_logged_in)
+      # get projects and tickets for logged in user
+      @projects_nav = @user.projects.order("id DESC")
+      @tickets_nav = @user.tickets.order("id DESC").all(:limit => 10)
+    end
   end
-  
+
+  def do_login
+    u = User.all(:conditions => ["email = ? AND password = ?", params[:user][:email], params[:user][:password]])
+    #u.authenticate(u)
+
+    respond_to do |format|
+      if u.first
+        session[:user_id] = u.first.id
+        format.html { redirect_to home_path, :notice => "Hello #{u.first.first_name}, thanks for logging in." }
+      else
+        format.html { redirect_to "/login", :notice => "That did not work." }
+      end
+    end
+  end
+
 end

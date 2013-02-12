@@ -16,8 +16,13 @@
 
 	<p>Users in project</p>
 	<% @users.each do |u| %>
-		<%= "#{u.first_name} #{u.last_name}" %>
-		<%= check_box_tag "project[project_users][]", u.id %>
+		<p>
+			<%= "#{u.first_name} #{u.last_name}" %>
+			<% if u.projects.exists?(@project.id) %>
+				<% @checked = true %>
+			<% end %>
+			<%= check_box_tag "project[project_users][]", u.id, @checked %>
+		</p>
 	<% end %>
 	<br /><br />
 

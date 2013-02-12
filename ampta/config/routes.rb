@@ -13,6 +13,8 @@ Ampta::Application.routes.draw do
 
   match "/home/error" => "home#error"
 
+  match "/do_login" => "home#do_login"
+
   resources :users
   
   resources :projects do

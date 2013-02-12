@@ -1,19 +1,22 @@
 <div class="container">
-	<div class="content">
-		<div class="row">
-			<div class="login-form">
-				<h2>Login</h2>
-				<form action="">
-					<fieldset>
-						<div class="clearfix">
-							<input type="text" placeholder="Username">
-						</div>
-						<div class="clearfix">
-							<input type="password" placeholder="Password">
-						</div>
-						<button class="btn primary" type="submit">Sign in</button>
-					</fieldset>
-				</form>
+	<div id="notice"><%= notice %></div>
+	<div class="container">
+		<div class="content">
+			<div class="row">
+				<div class="login-form">
+					<h2>Login</h2>
+					<%= form_for @user, :url => { :action => "do_login" } do |f| %>
+						<fieldset>
+							<div class="clearfix">
+								<%= f.text_field :email, :placeholder => "E-mail" %>
+							</div>
+							<div class="clearfix">
+								<%= f.password_field :password, :placeholder => "Password" %>
+							</div>
+							<%= f.submit "Login" %>
+						</fieldset>
+					<% end %>
+				</div>
 			</div>
 		</div>
 	</div>
