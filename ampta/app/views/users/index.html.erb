@@ -1,11 +1,8 @@
 <% content_for :title, "Users" %>
 
-<%= render :partial => "layouts/sidenav" %>
-<div class="main pull-left">
-	<h3>Users</h3>
-	<ul>
-	<% @users.each do |u| %>
-		<li><%= link_to "#{u.first_name} #{u.last_name}", user_path(u) %></li>
-	<% end %>
-	</ul>
-</div>
+<h3>Users</h3>
+<ul>
+<% @users.each do |u| %>
+	<li><%= link_to "#{u.first_name} #{u.last_name}", user_path(u) %></li>
+<% end %>
+</ul>

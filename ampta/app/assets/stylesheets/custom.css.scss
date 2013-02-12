@@ -75,12 +75,22 @@ p {
   width: 220px;
   margin-right: 20px;
   padding: 9px;
-  border: 1px solid black;
+  border: 1px solid #c0c0c0;
+  background: #f7fafa;
+
+  padding: 19px;
+  border-radius: 25px 0 0 25px;
+  -moz-border-radius: 25px 0 0 25px;
 }
 .main {
   padding: 9px;
-  width: 659px;
-  border: 1px solid black;
+  width: 619px;
+  border: 1px solid #c0c0c0;
+  background: #f7fafa;
+
+  padding: 19px;
+  border-radius: 0 25px 25px 0;
+  -moz-border-radius: 0 25px 25px 0;
 }
 
 .project_form input {
@@ -96,5 +106,9 @@ textarea {
 #notice {
   color: red;
   font-size: 18px;
+}
+label {
+  font-size: 16px;
+  font-weight: bold;
 }
 

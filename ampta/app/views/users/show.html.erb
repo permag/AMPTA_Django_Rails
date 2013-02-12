@@ -1,13 +1,10 @@
 <% content_for :title, "User" %>
 
-<%= render :partial => "layouts/sidenav" %>
-<div class="main pull-left">
-	<h3><%= "#{@user.first_name} #{@user.last_name}" %></h3>
+<h3><%= "#{@user.first_name} #{@user.last_name}" %></h3>
 
-	<h4><%= "#{@user.first_name}'s projects" %></h4>
-	<ul>
-	<% @user.projects.each do |p| %>
-		<li><%= link_to p.name, project_path(p) %></li>
-	<% end %>
-	</ul>
-</div>
+<h4><%= "#{@user.first_name}'s projects" %></h4>
+<ul>
+<% @user.projects.each do |p| %>
+	<li><%= link_to p.name, project_path(p) %></li>
+<% end %>
+</ul>

@@ -1,22 +1,19 @@
 <% content_for :title, "Projects" %>
 
-<%= render :partial => "layouts/sidenav" %>
-<div class="main pull-left">
-	<h3>Projects involving you</h3>
-	<ul>
-	<% @projects.each do |p| %>
-		<% if p.users.exists?(session[:user_id])  %>
-			<li><%= link_to p.name, project_path(p) %></li>
-		<% end %>
+<h3>Projects involving you</h3>
+<ul>
+<% @projects.each do |p| %>
+	<% if p.users.exists?(session[:user_id])  %>
+		<li><%= link_to p.name, project_path(p) %></li>
 	<% end %>
-	</ul>
+<% end %>
+</ul>
 
-	<h3>Other projects</h3>
-	<ul>
-	<% @projects.each do |p| %>
-		<% if !p.users.exists?(session[:user_id]) %>
-			<li><%= link_to p.name, project_path(p) %></li>
-		<% end %>
+<h3>Other projects</h3>
+<ul>
+<% @projects.each do |p| %>
+	<% if !p.users.exists?(session[:user_id]) %>
+		<li><%= link_to p.name, project_path(p) %></li>
 	<% end %>
-	</ul>
-</div>
+<% end %>
+</ul>

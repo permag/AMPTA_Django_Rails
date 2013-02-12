@@ -4,14 +4,20 @@ class TicketsController < ApplicationController
   before_filter :sidenav
 
   def index
-    @tickets = Ticket.where("project_id = ?", params[:project_id])
+    # if url: /tickets/ -show all tickets for user. if url: /project/id/tickets/ -show all tickets for project
+    if params[:project_id]
+      @project_name = Project.find(params[:project_id]).name
+      @tickets = Ticket.where("project_id = ?", params[:project_id])
+    else
+      @tickets = Ticket.where("user_id = ?", user_logged_in)
+    end
   end
 
   def show
     @ticket = Ticket.find(params[:id])
 
     # is ticket or project owner
-    if @ticket.user_id == session[:user_id] || @ticket.project.owner_id == session[:user_id]
+    if @ticket.user_id == user_logged_in || @ticket.project.owner_id == user_logged_in
       @owner_menu = true
     end
   end
@@ -22,7 +28,7 @@ class TicketsController < ApplicationController
 
   def create
     @ticket = Ticket.new(params[:ticket])
-    @ticket.user_id = session[:user_id]
+    @ticket.user_id = user_logged_in
 
     respond_to do |format|
       if @ticket.save
@@ -62,7 +68,7 @@ class TicketsController < ApplicationController
   #
   def confirm_user_edit
     ticket =  Ticket.find(params[:id])
-    unless ticket.user_id == session[:user_id] || ticket.project.owner_id == session[:user_id]
+    unless ticket.user_id == user_logged_in || ticket.project.owner_id == user_logged_in
       flash[:notice] = "You don't have the permission to do that."
       redirect_to home_error_path
       return false
@@ -73,7 +79,7 @@ class TicketsController < ApplicationController
 
   def confirm_user_new
     project = Project.find(params[:project_id]) 
-    unless project.owner_id == session[:user_id] || project.users.exists?(session[:user_id])
+    unless project.owner_id == user_logged_in || project.users.exists?(user_logged_in)
       flash[:notice] = "You don't have the permission to do that."
       redirect_to home_error_path
       return false

@@ -1,5 +1,5 @@
 <% @ticket.errors.full_messages.each do |msg| %>
-<p class="validationMsg"><%= msg %></p>
+<p class="validationMsg alert alert-error"><%= msg %></p>
 <% end %>
 
 <%= form_for @ticket, :url => { :action => @the_action }, :html => { :class => "project_form" } do |f| %>

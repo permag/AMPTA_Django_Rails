@@ -24,8 +24,7 @@ class ApplicationController < ActionController::Base
   end
 
   def user_logged_in
-    # test user id
-    session[:user_id]  #= nil
+    session[:user_id]
   end
 
   def headernav

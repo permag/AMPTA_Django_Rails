@@ -11,12 +11,12 @@ class ProjectsController < ApplicationController
     @project_owner = User.find(@project.owner_id)
 
     # is owner?
-    if @project.owner_id == session[:user_id]
+    if @project.owner_id == user_logged_in
       @owner_menu = true
     end
 
     # belongs to project?
-    if @project.users.exists?(session[:user_id])
+    if @project.users.exists?(user_logged_in)
       @belongs_menu = true
     end
   end
@@ -29,12 +29,12 @@ class ProjectsController < ApplicationController
   def create
     @users = get_users_except_current
     @project = Project.new(params[:project])
-    @project.owner_id = session[:user_id]
+    @project.owner_id = user_logged_in
 
 
     respond_to do |format|
       if @project.save
-        u = User.find(session[:user_id])
+        u = User.find(user_logged_in)
         u.projects << @project
 
         if params[:project][:project_users]
@@ -63,7 +63,7 @@ class ProjectsController < ApplicationController
         # clear join table
         @project.users.clear
         # current user
-        u = User.find(session[:user_id])
+        u = User.find(user_logged_in)
         u.projects << @project
         if params[:project][:project_users]
           # add users to join table
@@ -88,7 +88,7 @@ class ProjectsController < ApplicationController
   end
 
   def get_users_except_current
-    current_user = User.find(session[:user_id])
+    current_user = User.find(user_logged_in)
     @users = (current_user.blank? ? User.all : User.find(:all, :conditions => ["id != ?", current_user.id]))
   end
 
@@ -96,7 +96,7 @@ class ProjectsController < ApplicationController
   # check to see if user is project owner
   #
   def confirm_user
-    unless Project.find(params[:id]).owner_id == session[:user_id]
+    unless Project.find(params[:id]).owner_id == user_logged_in
       flash[:notice] = "You don't have the permission to do that."
       redirect_to home_error_path
       return false

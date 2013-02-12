@@ -9,7 +9,11 @@
 <body>
 	<div class="container">
 		<%= render :partial => "layouts/header" %>
-		<%= yield %>
+		<%= render :partial => "layouts/sidenav" %>
+		
+		<div class="main pull-left">
+			<%= yield %>
+		</div>
 	</div>
 </body>
 </html>
