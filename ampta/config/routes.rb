@@ -23,6 +23,8 @@ Ampta::Application.routes.draw do
 
   # resources :tickets, :only => [:index, :show]
   resources :tickets
+
+  match "/register" => "users#new"
   
 
   # The priority is based upon order of creation:
