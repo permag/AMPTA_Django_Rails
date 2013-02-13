@@ -20,6 +20,8 @@
 			<%= "#{u.first_name} #{u.last_name}" %>
 			<% if u.projects.exists?(@project.id) %>
 				<% @checked = true %>
+			<% else %>
+				<% @checked = false %>
 			<% end %>
 			<%= check_box_tag "project[project_users][]", u.id, @checked %>
 		</p>

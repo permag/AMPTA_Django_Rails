@@ -42,13 +42,12 @@ class ApplicationController < ActionController::Base
   end
 
   def do_login
-    u = User.all(:conditions => ["email = ? AND password = ?", params[:user][:email], params[:user][:password]])
-    #u.authenticate(u)
+    user = User.authenticate(params[:user][:email], params[:user][:password])
 
     respond_to do |format|
-      if u.first
-        session[:user_id] = u.first.id
-        format.html { redirect_to home_path, :notice => "Hello #{u.first.first_name}, thanks for logging in." }
+      if user
+        session[:user_id] = user.id
+        format.html { redirect_to home_path, :notice => "Hello #{user.first_name}, thanks for logging in." }
       else
         format.html { redirect_to "/login", :notice => "That did not work." }
       end
