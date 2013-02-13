@@ -3,7 +3,7 @@ class User < ActiveRecord::Base
   has_and_belongs_to_many :projects
   has_many :tickets
 
-  has_secure_password
+  ##### has_secure_password
   attr_accessor :password
   before_save :create_hashed_password
   after_save :clear_password

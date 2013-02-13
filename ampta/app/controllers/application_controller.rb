@@ -6,7 +6,7 @@ class ApplicationController < ActionController::Base
   def confirm_logged_in
     unless session[:user_id]
       flash[:notice] = "You must be logged in."
-      redirect_to home_login_path
+      redirect_to login_path
       return false
     else
       return true
@@ -14,13 +14,18 @@ class ApplicationController < ActionController::Base
   end
 
   def login
-    @user = User.new
-    render :layout => 'login_page'
+    unless user_logged_in
+      @user = User.new
+      render :layout => 'login_page'
+    else
+      #redirect_to home_path
+      render "index"
+    end
   end
 
   def logout
     session[:user_id] = nil
-    redirect_to home_login_path
+    redirect_to login_path
   end
 
   def user_logged_in
@@ -49,7 +54,7 @@ class ApplicationController < ActionController::Base
         session[:user_id] = user.id
         format.html { redirect_to home_path, :notice => "Hello #{user.first_name}, thanks for logging in." }
       else
-        format.html { redirect_to "/login", :notice => "That did not work." }
+        format.html { redirect_to login_path, :notice => "That did not work." }
       end
     end
   end

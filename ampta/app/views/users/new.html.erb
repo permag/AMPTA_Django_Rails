@@ -1,0 +1,29 @@
+<% content_for :title, "Register" %>
+
+<% @user.errors.full_messages.each do |msg| %>
+<p class="validationMsg alert alert-error"><%= msg %></p>
+<% end %>
+
+<div class="container">
+	<div id="notice"><%= notice %></div>
+	<div class="container">
+		<div class="content">
+			<div class="row">
+				<div class="login-form">
+					<h2>Register</h2>
+					<%= form_for @user, :url => { :action => "create" } do |f| %>
+						<%= f.label :first_name %>
+						<%= f.text_field :first_name, :in => 2..20 %><br />
+						<%= f.label :last_name %>
+						<%= f.text_field :last_name, :in => 2..20 %><br />
+						<%= f.label :email %>
+						<%= f.text_field :email %><br />
+						<%= f.label :password %>
+						<%= f.password_field :password %><br />
+						<%= f.submit %>
+					<% end %>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

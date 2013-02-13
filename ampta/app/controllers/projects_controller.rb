@@ -31,7 +31,6 @@ class ProjectsController < ApplicationController
     @project = Project.new(params[:project])
     @project.owner_id = user_logged_in
 
-
     respond_to do |format|
       if @project.save
         u = User.find(user_logged_in)
