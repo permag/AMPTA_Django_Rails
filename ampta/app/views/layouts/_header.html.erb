@@ -9,8 +9,8 @@
       <a id="logo" class="brand">Ampta</a>
       <div class="nav-collapse collapse">
         <ul class="nav">
-          <li class="<%= 'active' if current_page?(root_path) || current_page?(home_index_path) %>">
-            <%= link_to 'Home', root_path %>
+          <li class="<%= 'active' if current_page?(root_path) || current_page?(home_index_path) || current_page?(home_path) %>">
+            <%= link_to 'Home', home_path %>
           </li>
           <li class="<%= 'active' if current_page?(users_path) %>">
             <%= link_to 'All users', users_path %>
