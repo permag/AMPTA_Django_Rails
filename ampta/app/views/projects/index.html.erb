@@ -13,7 +13,7 @@
 <ul>
 <% @projects.each do |p| %>
 	<% if !p.users.exists?(session[:user_id]) %>
-		<li><%= link_to p.name, project_path(p) %></li>
+		<li><%= p.name %></li>
 	<% end %>
 <% end %>
 </ul>

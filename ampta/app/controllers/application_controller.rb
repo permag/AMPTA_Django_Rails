@@ -25,6 +25,7 @@ class ApplicationController < ActionController::Base
 
   def logout
     session[:user_id] = nil
+    session[:user_name] = nil
     redirect_to login_path
   end
 
@@ -33,7 +34,7 @@ class ApplicationController < ActionController::Base
   end
 
   def headernav
-    @active_user = User.find(self.user_logged_in) if user_logged_in
+    @user_name = session[:user_name]
   end
   
   def sidenav
@@ -52,6 +53,7 @@ class ApplicationController < ActionController::Base
     respond_to do |format|
       if user
         session[:user_id] = user.id
+        session[:user_name] = "#{user.first_name} #{user.last_name}"
         format.html { redirect_to home_path, :notice => "Hello #{user.first_name}, thanks for logging in." }
       else
         format.html { redirect_to login_path, :notice => "That did not work." }

@@ -1,5 +1,6 @@
 class ProjectsController < ApplicationController
   before_filter :confirm_user, :only => [:edit, :update, :destroy]
+  before_filter :confirm_user_show, :only => :show
   before_filter :sidenav
 
   def index
@@ -97,6 +98,17 @@ class ProjectsController < ApplicationController
   def confirm_user
     unless Project.find(params[:id]).owner_id == user_logged_in
       flash[:notice] = "You don't have the permission to do that."
+      redirect_to home_error_path
+      return false
+    else
+      return true
+    end
+  end
+
+  def confirm_user_show
+    project = Project.find(params[:id]) 
+    unless project.owner_id == user_logged_in || project.users.exists?(user_logged_in)
+      flash[:notice] = "You don't have the permission watch this project."
       redirect_to home_error_path
       return false
     else

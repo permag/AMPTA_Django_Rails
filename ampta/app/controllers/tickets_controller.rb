@@ -1,6 +1,7 @@
 class TicketsController < ApplicationController
-  before_filter :confirm_user_new, :only => [:new, :create]
+  before_filter :confirm_user_new, :only => [:new, :create, :show]
   before_filter :confirm_user_edit, :only => [:edit, :update, :destroy]
+  before_filter :confirm_user_index, :only => [:index]
   before_filter :sidenav
 
   def index
@@ -80,6 +81,16 @@ class TicketsController < ApplicationController
   def confirm_user_new
     project = Project.find(params[:project_id]) 
     unless project.owner_id == user_logged_in || project.users.exists?(user_logged_in)
+      flash[:notice] = "You don't have the permission to do that."
+      redirect_to home_error_path
+      return false
+    else
+      return true
+    end
+  end
+
+  def confirm_user_index
+    if params[:project_id] && !Project.find(params[:project_id]).users.exists?(user_logged_in)
       flash[:notice] = "You don't have the permission to do that."
       redirect_to home_error_path
       return false
