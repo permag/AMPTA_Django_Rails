@@ -1,0 +1,12 @@
+{% extends 'shared/base.html' %}
+
+{% block title %}{{block.super}} | Projects{% endblock%}
+
+{% block content %}
+<h3>All projects</h3>
+
+{% for p in projects %}
+	{{ p.name }}
+{% endfor %}
+
+{% endblock %}

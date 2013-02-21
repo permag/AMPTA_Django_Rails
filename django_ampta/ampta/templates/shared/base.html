@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>
+			{% block title %}AMPTA{% endblock %}
+		</title>
+		{% block styles %}
+			<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}styles/bootstrap.min.css">
+			<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}styles/site.css">
+		{% endblock %}
+	</head>
+	<body>
+		<div class="container">
+		<header>
+			<!-- menu nav -->
+			<nav class="navbar navbar-inverse navbar-fixed-top">
+				<div class="navbar-inner">
+					<div class="container">
+						<button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+							<span class="icon-bar"></span>
+							<span class="icon-bar"></span>
+							<span class="icon-bar"></span>
+						</button>
+						<a id="logo" class="brand">Ampta</a>
+						<div class="nav-collapse collapse">
+							<ul class="nav">
+								<li>
+									<a href="{% url home %}">Home</a>
+								</li>
+								<li>
+									All users
+								</li>
+								<li>
+									<a href="{% url projects %}">All projects</a>
+								</li>
+								<li>
+									New project
+								</li>
+							</ul>
+						</div>
+						<span class="sign_out pull-right">Sign out</span>
+						<span class="active_user pull-right">Username</span>
+					</div>
+				</div>
+			</nav>
+		</header>
+
+		<!-- side nav -->
+		<div class="sidenav pull-left">
+			<h5>Your projects</h5>
+			<ul>
+			
+			</ul>
+		</div>
+
+		<!-- main -->
+		<div class="main pull-left">
+
+			{% block content %}
+				This is the body.
+			{% endblock %}
+
+		</div>
+
+		<footer></footer>
+		</div>
+	</body>
+</html>
