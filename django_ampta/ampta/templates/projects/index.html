@@ -6,7 +6,7 @@
 <h3>All projects</h3>
 
 {% for p in projects %}
-	{{ p.name }}
+	<p><a href="{% url project p.id %}">{{ p.name }}</a></p>
 {% endfor %}
 
 {% endblock %}

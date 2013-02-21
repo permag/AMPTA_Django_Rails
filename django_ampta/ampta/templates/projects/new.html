@@ -1,0 +1,10 @@
+{% extends 'shared/base.html' %}
+
+{% block title %}{{block.super}} | New project{% endblock%}
+
+{% block content %}
+<h3>New project</h3>
+
+{% include 'projects/_new_edit_form.html' %}
+
+{% endblock %}
