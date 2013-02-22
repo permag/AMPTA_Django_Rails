@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.forms import ModelForm
 from django import forms
+import datetime
 
 class Project(models.Model):
     name = models.CharField(max_length=20)
@@ -48,6 +49,10 @@ class LoginForm(forms.Form):
     password = forms.CharField(max_length=40, widget=forms.PasswordInput)
 
 class ProjectForm(ModelForm):
+    start_date = forms.DateField(initial=datetime.date.today)
+    # define multi choice form field manually to customize help_text
+    users = forms.ModelMultipleChoiceField(User.objects.all(), 
+            help_text='Select many by holding down ctrl or cmd key.')
     class Meta:
         model = Project
         exclude = ('owner', 'date_added', 'date_updated')

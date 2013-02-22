@@ -1,0 +1,23 @@
+{% extends 'shared/base.html' %}
+
+{% block title %}{{block.super}} | {{ ticket.name }}{% endblock%}
+
+{% block content %}
+<h3>{{ ticket.name }}</h3>
+<p>{{ ticket.description }}</p>
+
+<h4>Start</h4>
+<p>{{ ticket.start_date }}</p>
+
+<h4>End</h4>
+<p>{{ ticket.end_date }}</p>
+
+<h4>Status</h4>
+<p>{{ ticket.status.status_name }}</p>
+
+<h4>Owner</h4>
+<p><a href="">{{ ticket.owner.get_full_name }}</a></p>
+
+<p><a href="#">Edit</a></p>
+
+{% endblock %}

@@ -34,9 +34,18 @@ urlpatterns += patterns('ampta.views.project_views',
     url(r'^projects/new/$', 'new_create', name='new_project'),
     # projects/1/edit
     url(r'^projects/(?P<project_id>\d+)/edit/$', 'edit_update', name='edit_project'),
+    # projects/1/delete
+    url(r'^projects/(?P<project_id>\d+)/delete/$', 'delete', name='delete_project'),
 )
 
 # Ticket views
 urlpatterns += patterns('ampta.views.ticket_views',
-
+    # tickets
+    url(r'^tickets/$', 'index', name='tickets'),
+    # tickets/1
+    url(r'^tickets/(?P<ticket_id>\d+)/$', 'show', name="ticket"),
+    # projects/1/tickets
+    url(r'^projects/(?P<project_id>\d+)/tickets/$', 'index', name='project_tickets'),
+    # projects/1/tickets/1
+    url(r'^projects/(?P<project_id>\d+)/tickets/(?P<ticket_id>\d+)/$', 'show', name='project_ticket'),
 )

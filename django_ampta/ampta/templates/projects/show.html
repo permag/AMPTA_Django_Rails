@@ -6,6 +6,31 @@
 <h3>{{ project.name }}</h3>
 <p>{{ project.description }}</p>
 
+<h4>Start</h4>
+<p>{{ project.start_date }}</p>
+
+<h4>End</h4>
+<p>{{ project.end_date }}</p>
+
+<h4>Tickets</h4>
+{% if project.tickets.count %}
+<ul>
+	{% for t in project.tickets.all %}
+	<li>{{ t.name }}</li>
+	{% endfor %}
+</ul>
+{% else %}
+	<p>No tickets</p>
+{% endif %}
+
+<h4>Owner</h4>
+<p><a href="">{{ project.owner.get_full_name }}</a></p>
+
 <p><a href="{% url edit_project project.id %}">Edit</a></p>
+
+<form action="{% url delete_project project.id %}" method="POST">{% csrf_token %}
+	<input type="submit" value="Delete" class="confirmDelete" />
+</form>
+
 
 {% endblock %}

@@ -34,7 +34,7 @@
 									<a href="{% url projects %}">All projects</a>
 								</li>
 								<li>
-									New project
+									<a href="{% url new_project %}">Create project</a>
 								</li>
 							</ul>
 						</div>
@@ -64,5 +64,9 @@
 
 		<footer></footer>
 		</div>
+		{% block javascript %}
+		<script src="http://code.jquery.com/jquery-1.8.2.js"></script>
+		<script src="{{ STATIC_URL }}js/init.js"></script>
+		{% endblock %}
 	</body>
 </html>
