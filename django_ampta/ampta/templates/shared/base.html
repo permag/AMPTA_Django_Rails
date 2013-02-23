@@ -1,3 +1,4 @@
+{% load custom_filters %}
 <!DOCTYPE html>
 <html>
 	<head>
@@ -30,7 +31,7 @@
 								<li>
 									All users
 								</li>
-								<li>
+								<li {% if projects_active %}class="active"{% endif %}>
 									<a href="{% url projects %}">All projects</a>
 								</li>
 								<li>
@@ -39,22 +40,43 @@
 							</ul>
 						</div>
 						<span class="sign_out pull-right">Sign out</span>
-						<span class="active_user pull-right">Username</span>
+						<span class="active_user pull-right">{{ user.get_full_name }}</span>
 					</div>
 				</div>
 			</nav>
 		</header>
-
+ 
 		<!-- side nav -->
 		<div class="sidenav pull-left">
-			<h5>Your projects</h5>
+			<h5>Your Projects</h5>
+			<!-- get projects for user with custom_filter method -->
 			<ul>
+			{% with projects=user|user_projects %}
+			{% for p in projects.all %}
+				<li>
+					<a href="{% url project p.id %}">{{ p.name }}</a>
+					{% if p|owned_by_user:user %}(admin){% endif %}
+				</li>
+				{% if p.ownership %}hej{% endif %}
+			{% endfor%}
+			{% endwith %}
+			</ul>
 			
+			<h5>Your latest Tickets ({{ user.tickets.count }})</h5>
+			<ul>			
+			<!-- get tickets for user, direct via the global user object -->
+			{% for t in user.tickets.all|dictsortreversed:"date_added"|slice:"10" %}
+				<li><a href="{% url project_ticket t.project.id t.id %}">{{ t.name }}</a></li>
+			{% endfor %}
 			</ul>
 		</div>
 
 		<!-- main -->
 		<div class="main pull-left">
+
+			{% for p in get_user_projects %}
+				{{ p.name }}
+			{% endfor%}
 
 			{% block content %}
 				This is the body.

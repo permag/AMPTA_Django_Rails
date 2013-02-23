@@ -6,7 +6,7 @@ from django.contrib import messages
 
 def index(request):
     projects = get_list_or_404(Project.objects.order_by('-date_added'))
-    return render(request, 'projects/index.html', { 'projects': projects })
+    return render(request, 'projects/index.html', { 'projects': projects, 'projects_active': True })
 
 def show(request, project_id=None):
     project = get_object_or_404(Project, id=project_id)
