@@ -101,6 +101,15 @@ label {
   font-size: 16px;
   font-weight: bold;
 }
-.errorlist {
+.errorlist, .redAlert {
   color: red;
+}
+.validationError input, .validationError textarea, .validationError select {
+  border: 2px solid red;
+  background: #ffced1;
+}
+
+.countTickets {
+  font-weight: normal;
+  text-decoration: italic;
 }

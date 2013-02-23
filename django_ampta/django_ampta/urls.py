@@ -16,15 +16,15 @@ urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
 )
 
-# Home view
-urlpatterns += patterns('ampta.views.home_views',
+# General views
+urlpatterns += patterns('ampta.views.views',
     # root
-    url(r'^$', 'index', name='root'),
+    url(r'^$', 'home_index', name='root'),
     # home
-    url(r'home/$', 'index', name='home'),
+    url(r'home/$', 'home_index', name='home'),
 )
 
-# Project views
+# Project viewss
 urlpatterns += patterns('ampta.views.project_views',
     # projects
     url(r'^projects/$', 'index', name='projects'),
@@ -38,7 +38,7 @@ urlpatterns += patterns('ampta.views.project_views',
     url(r'^projects/(?P<project_id>\d+)/delete/$', 'delete', name='delete_project'),
 )
 
-# Ticket views
+# Ticket viewss
 urlpatterns += patterns('ampta.views.ticket_views',
     # tickets
     url(r'^tickets/$', 'index', name='tickets'),

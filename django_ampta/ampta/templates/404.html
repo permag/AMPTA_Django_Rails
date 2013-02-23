@@ -1,0 +1,8 @@
+{% extends 'shared/base.html' %}
+
+{% block title %}{{block.super}} | Resource not found {{ project.name }}{% endblock%}
+
+{% block content %}
+<h3>Resource not found</h3>
+<p>The requested resource was not found.</p>
+{% endblock %}

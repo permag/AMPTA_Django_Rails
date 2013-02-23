@@ -3,10 +3,10 @@
 {% block title %}{{block.super}} | Tickets{% endblock%}
 
 {% block content %}
-<h3>All Tickets</h3>
-
+<h3>All your Tickets</h3>
+<ul>
 {% for t in tickets %}
-	<p><a href="{% url ticket t.id %}">{{ t.name }}</a></p>
+	<li><a href="{% url ticket t.id %}">{{ t.name }}</a></li>
 {% endfor %}
-
+</ul>
 {% endblock %}

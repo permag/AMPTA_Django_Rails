@@ -1,15 +1,32 @@
 from django.shortcuts import get_list_or_404, get_object_or_404, render, redirect
-from ampta.models import Project, ProjectForm
+from ampta.models import Project
+from ampta.forms import ProjectForm
 import datetime
 from django.http import HttpResponse
-from django.contrib import messages
+
+""" Custom decorators """
+# Only members of project may view project
+def permission_private_project(function):
+    def wrapper(request, project_id, *args, **kwargs):
+        user=request.user
+        project = Project.objects.get(id=project_id)
+        if not project.has_user(user):
+            return render(request, 'shared/error.html', { 'error_type': 'private' })
+        else:
+            return function(request, project_id, project, *args, **kwargs)
+    return wrapper
+
+
+""" View methods """
 
 def index(request):
     projects = get_list_or_404(Project.objects.order_by('-date_added'))
     return render(request, 'projects/index.html', { 'projects': projects, 'projects_active': True })
 
-def show(request, project_id=None):
-    project = get_object_or_404(Project, id=project_id)
+@permission_private_project
+def show(request, project_id=None, project=None):
+    if not project:
+        project = get_object_or_404(Project, id=project_id)
     return render(request, 'projects/show.html', { 'project': project })
 
 def new_create(request):
@@ -40,7 +57,7 @@ def edit_update(request, project_id=None):
         else:
             form = ProjectForm(instance=project)
     else:
-        return HttpResponse("You don't have permissions to do that.")
+        return render(request, 'shared/error.html', { 'error_type': 'permission' })
     return render(request, 'projects/new.html', { 'form': form, 'title': 'Update project' })
 
 def delete(request, project_id=None):
@@ -53,5 +70,4 @@ def delete(request, project_id=None):
             return HttpResponse("You don't have permissions to do that.")
     else:
         return redirect('root')
-
 

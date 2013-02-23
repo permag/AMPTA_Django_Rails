@@ -23,6 +23,13 @@
 	<p>No tickets</p>
 {% endif %}
 
+<h4>Users</h4>
+<ul>
+{% for u in project.users.all %}
+	<li>{{ u.get_full_name }}</li>
+{% endfor %}
+</ul>
+
 <h4>Owner</h4>
 <p><a href="">{{ project.owner.get_full_name }}</a></p>
 

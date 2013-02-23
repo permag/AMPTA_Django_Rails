@@ -3,9 +3,9 @@
 
 {% block content %}
 <h3>All projects</h3>
-
+<ul>
 {% for p in projects %}
-	<p><a href="{% url project p.id %}">{{ p.name }}</a></p>
+	<li><a href="{% url project p.id %}">{{ p.name }}</a></li>
 {% endfor %}
-
+</ul>
 {% endblock %}
