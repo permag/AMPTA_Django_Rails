@@ -2,27 +2,14 @@ from django.shortcuts import get_list_or_404, get_object_or_404, render, redirec
 from ampta.models import Project
 from ampta.forms import ProjectForm
 import datetime
-from django.http import HttpResponse
-
-""" Custom decorators """
-# Only members and owners of project may view project
-def permission_private_project(function):
-    def wrapper(request, project_id, *args, **kwargs):
-        user = request.user
-        project = Project.objects.get(id=project_id)
-        if not project.has_user(user) and not project.owned_by_user(user):
-            return render(request, 'shared/error.html', { 'error_type': 'private' })
-        return function(request, project_id, project, *args, **kwargs)
-    return wrapper
-
-
-""" View methods """
+from django.http import HttpResponse, Http404
+from ampta.modules.decorators import get_project_if_member
 
 def index(request):
     projects = get_list_or_404(Project.objects.order_by('-date_added'))
     return render(request, 'projects/index.html', { 'projects': projects, 'projects_active': True })
 
-@permission_private_project
+@get_project_if_member
 def show(request, project_id=None, project=None):
     if not project:
         project = get_object_or_404(Project, id=project_id)
@@ -50,7 +37,7 @@ def edit_update(request, project_id=None):
                 try:
                     form.instance.date_updated = datetime.datetime.today()
                     form.save()
-                    return redirect("/projects/{0}".format(project_id))
+                    return redirect(project.get_absolute_url())
                 except:
                     return HttpResponseServerError()
         else:
@@ -68,5 +55,5 @@ def delete(request, project_id=None):
         else:
             return HttpResponse("You don't have permissions to do that.")
     else:
-        return redirect('root')
+        raise Http404
 

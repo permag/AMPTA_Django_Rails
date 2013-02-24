@@ -1,4 +1,5 @@
 {% extends 'shared/base.html' %}
+{% load custom_filters %}
 
 {% block title %}{{block.super}} | {{ ticket.name }}{% endblock%}
 
@@ -18,6 +19,15 @@
 <h4>Owner</h4>
 <p><a href="">{{ ticket.owner.get_full_name }}</a></p>
 
-<p><a href="#">Edit</a></p>
+
+{% if ticket|project_or_ticket_owned_by_user:user %}
+
+<p><a href="{% url edit_project_ticket ticket.project.id ticket.id %}">Edit</a></p>
+
+<form action="{% url delete_project_ticket ticket.project.id ticket.id %}" method="POST">{% csrf_token %}
+	<input type="submit" value="Delete" class="confirmDelete" />
+</form>
+
+{% endif %}
 
 {% endblock %}

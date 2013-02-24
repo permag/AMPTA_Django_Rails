@@ -10,6 +10,8 @@
 <h4>Start</h4>
 <p>{{ project.start_date }}</p>
 
+<p><a href="{% url new_project_ticket project.id %}">Add ticket</a></p>
+
 <h4>End</h4>
 <p>{{ project.end_date }}</p>
 
@@ -35,7 +37,7 @@
 <h4>Owner</h4>
 <p><a href="">{{ project.owner.get_full_name }}</a></p>
 
-{% if project|owned_by_user:user %}
+{% if project|project_owned_by_user:user %}
 
 <p><a href="{% url edit_project project.id %}">Edit</a></p>
 

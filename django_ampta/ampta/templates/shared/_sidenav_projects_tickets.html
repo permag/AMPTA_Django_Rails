@@ -6,7 +6,7 @@
 {% for p in projects.all %}
 	<li>
 		<a href="{% url project p.id %}">{{ p.name }}</a>
-		{% if p|owned_by_user:user %}(admin){% endif %}
+		{% if p|project_owned_by_user:user %}(admin){% endif %}
 	</li>
 	{% if p.ownership %}hej{% endif %}
 {% endfor%}

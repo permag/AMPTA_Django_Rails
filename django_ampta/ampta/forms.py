@@ -20,6 +20,8 @@ class ProjectForm(ModelForm):
         exclude = ('owner', 'date_added', 'date_updated')
 
 class TicketForm(ModelForm):
+    start_date = forms.DateField(initial=datetime.date.today)
+    error_css_class = 'validationError'
     class Meta:
         model = Ticket
         exclude = ('project', 'owner', 'date_added', 'date_updated')

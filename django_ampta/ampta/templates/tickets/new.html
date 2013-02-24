@@ -1,0 +1,13 @@
+{% extends 'shared/base.html' %}
+
+{% block title %}{{block.super}} | New ticket{% endblock%}
+
+{% block content %}
+<h3>{{ title }}</h3>
+
+<form action="" method="POST">{% csrf_token %}
+	{{ form.as_p }}
+	<input type="submit" value="{{ title|default:"Submit" }}" />
+</form>
+
+{% endblock %}

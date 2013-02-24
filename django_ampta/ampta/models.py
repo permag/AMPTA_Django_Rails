@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 
 class Project(models.Model):
-    name = models.CharField(max_length=20)
+    name = models.CharField(max_length=30)
     description = models.TextField()
     start_date = models.DateField()
     end_date = models.DateField()
@@ -28,7 +28,7 @@ class Status(models.Model):
         verbose_name_plural = 'Statuses'
 
 class Ticket(models.Model):
-    name = models.CharField(max_length=20)
+    name = models.CharField(max_length=30)
     description = models.TextField()
     start_date = models.DateField();
     end_date = models.DateField();
