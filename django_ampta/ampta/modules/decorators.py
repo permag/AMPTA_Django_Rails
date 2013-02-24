@@ -1,6 +1,7 @@
 from django.shortcuts import get_object_or_404, render
 from ampta.models import Project, Ticket
 
+
 # Get project object and return it to view method IF user is member of project.
 def get_project_if_member(function):
     def wrapper(request, project_id=None, *args, **kwargs):
@@ -10,6 +11,7 @@ def get_project_if_member(function):
             return render(request, 'shared/error.html', { 'error_type': 'private' })
         return function(request, project_id, project, *args, **kwargs)
     return wrapper
+
 
 # Get ticket object and return it to view method IF user is member of project.
 def get_ticket_if_member(function):

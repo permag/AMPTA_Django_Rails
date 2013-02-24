@@ -6,6 +6,7 @@ import datetime
 from django.http import HttpResponse, HttpResponseServerError, Http404
 from ampta.modules.decorators import get_project_if_member, get_ticket_if_member
 
+
 def index(request, project_id=None):
     if project_id:
         project = get_object_or_404(Project, id=project_id)
@@ -15,13 +16,15 @@ def index(request, project_id=None):
             raise Http404
     else:
         tickets = get_list_or_404(request.user.tickets.order_by('-date_added'))
-    return render(request, 'tickets/index.html', { 'tickets': tickets })
+    return render(request, 'tickets/index.html', {'tickets': tickets})
+
 
 @get_ticket_if_member
 def show(request, project_id=None, ticket_id=None, ticket=None ):
     if not ticket:
         ticket = get_object_or_404(Ticket, id=ticket_id)
-    return render(request, 'tickets/show.html', { 'ticket': ticket })
+    return render(request, 'tickets/show.html', {'ticket': ticket})
+
 
 @get_project_if_member
 def new_create(request, project_id=None, project=None):
@@ -35,12 +38,13 @@ def new_create(request, project_id=None, project=None):
             form.instance.date_updated = datetime.datetime.today()
             try:
                 form.save()
-                return redirect(project.get_absolute_url())
+                return redirect(project)
             except:
                 HttpResponseServerError()
     else:
         form = TicketForm()
-    return render(request, 'tickets/new.html', { 'form': form, 'title': 'Create ticket' })
+    return render(request, 'tickets/new.html', {'form': form, 'title': 'Create ticket'})
+
 
 def edit_update(request, project_id=None, ticket_id=None):
     project = get_object_or_404(Project, id=project_id)
@@ -53,14 +57,15 @@ def edit_update(request, project_id=None, ticket_id=None):
                 try:
                     form.instance.date_updated = datetime.datetime.today()
                     form.save()
-                    return redirect(ticket.get_absolute_url())
+                    return redirect(ticket)
                 except:
                     return HttpResponseServerError()
         else:
             form = TicketForm(instance=ticket)
     else:
-        return render(request, 'shared/error.html', { 'error_type': 'permission' })
-    return render(request, 'tickets/new.html', { 'form': form, 'title': 'Update ticket' })
+        return render(request, 'shared/error.html', {'error_type': 'permission'})
+    return render(request, 'tickets/new.html', {'form': form, 'title': 'Update ticket'})
+
 
 def delete(request, project_id=None, ticket_id=None):
     if request.method == 'POST':
@@ -70,14 +75,11 @@ def delete(request, project_id=None, ticket_id=None):
         if project.owned_by_user(user) or ticket.owned_by_user(user):
             try:
                 ticket.delete()
-                return redirect(project.get_absolute_url())
+                return redirect(project)
             except:
                 return HttpResponseServerError()
         else:
             return HttpResponse("You don't have permissions to do that.")
     else:
         raise Http404
-
-
-
 
