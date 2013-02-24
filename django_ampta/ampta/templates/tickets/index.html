@@ -6,7 +6,7 @@
 <h3>All your Tickets</h3>
 <ul>
 {% for t in tickets %}
-	<li><a href="{% url ticket t.id %}">{{ t.name }}</a></li>
+	<li><a href="{% url project_ticket t.project.id t.id %}">{{ t.name }}</a></li>
 {% endfor %}
 </ul>
 {% endblock %}

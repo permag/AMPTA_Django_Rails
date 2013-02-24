@@ -1,4 +1,5 @@
 {% extends 'shared/base.html' %}
+{% load custom_filters %}
 
 {% block title %}{{block.super}} | {{ project.name }}{% endblock%}
 
@@ -16,7 +17,8 @@
 {% if project.tickets.count %}
 <ul>
 	{% for t in project.tickets.all %}
-	<li>{{ t.name }}</li>
+	<!--<li><a href="{% url project_ticket t.project.id t.id %}">{{ t.name }}</a></li>-->
+	<li><a href="{{ t.get_absolute_url }}">{{ t.name }}</a></li>
 	{% endfor %}
 </ul>
 {% else %}
@@ -33,11 +35,14 @@
 <h4>Owner</h4>
 <p><a href="">{{ project.owner.get_full_name }}</a></p>
 
+{% if project|owned_by_user:user %}
+
 <p><a href="{% url edit_project project.id %}">Edit</a></p>
 
 <form action="{% url delete_project project.id %}" method="POST">{% csrf_token %}
 	<input type="submit" value="Delete" class="confirmDelete" />
 </form>
 
+{% endif %}
 
 {% endblock %}

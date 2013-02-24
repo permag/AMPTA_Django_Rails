@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.core.urlresolvers import reverse
 
 class Project(models.Model):
     name = models.CharField(max_length=20)
@@ -16,6 +17,8 @@ class Project(models.Model):
         return self.owner == user
     def has_user(self, user):
         return user in self.users.all()
+    def get_absolute_url(self):
+        return reverse('project', args=[str(self.id)])
 
 class Status(models.Model):
     status_name = models.CharField(max_length=20)
@@ -38,3 +41,5 @@ class Ticket(models.Model):
         return self.name
     def owned_by_user(self, user):
         return self.owner == user
+    def get_absolute_url(self):
+        return reverse('project_ticket', args=[str(self.project.id), str(self.id)])

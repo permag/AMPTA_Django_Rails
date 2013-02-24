@@ -5,15 +5,14 @@ import datetime
 from django.http import HttpResponse
 
 """ Custom decorators """
-# Only members of project may view project
+# Only members and owners of project may view project
 def permission_private_project(function):
     def wrapper(request, project_id, *args, **kwargs):
-        user=request.user
+        user = request.user
         project = Project.objects.get(id=project_id)
-        if not project.has_user(user):
+        if not project.has_user(user) and not project.owned_by_user(user):
             return render(request, 'shared/error.html', { 'error_type': 'private' })
-        else:
-            return function(request, project_id, project, *args, **kwargs)
+        return function(request, project_id, project, *args, **kwargs)
     return wrapper
 
 
