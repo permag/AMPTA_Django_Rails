@@ -8,7 +8,7 @@ def get_project_if_member(function):
         user = request.user
         project = get_object_or_404(Project, id=project_id)
         if not project.has_user(user) and not project.owned_by_user(user):
-            return render(request, 'shared/error.html', { 'error_type': 'private' })
+            return render(request, 'shared/error.html', {'error_type': 'private'})
         return function(request, project_id, project, *args, **kwargs)
     return wrapper
 
@@ -23,7 +23,8 @@ def get_ticket_if_member(function):
         else:
             ticket = get_object_or_404(Ticket, id=ticket_id)
             project = ticket.project
-        if not project.has_user(user) and not project.owned_by_user(user) and not ticket.owned_by_user(user):
-            return render(request, 'shared/error.html', { 'error_type': 'private' })
+        if (not project.has_user(user) and not project.owned_by_user(user) and not 
+            ticket.owned_by_user(user)):
+            return render(request, 'shared/error.html', {'error_type': 'private'})
         return function(request, project_id, ticket_id, ticket, *args, **kwargs)
     return wrapper

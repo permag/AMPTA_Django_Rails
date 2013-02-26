@@ -22,6 +22,10 @@ urlpatterns += patterns('ampta.views.views',
     url(r'^$', 'home_index', name='root'),
     # home
     url(r'home/$', 'home_index', name='home'),
+    # login
+    url(r'^login/$', 'user_login', name='login'),
+    # logout
+    url(r'^logout/$', 'user_logout', name='logout'),
 )
 
 # Project viewss
@@ -38,10 +42,12 @@ urlpatterns += patterns('ampta.views.project_views',
     url(r'^projects/(?P<project_id>\d+)/delete/$', 'delete', name='delete_project'),
 )
 
-# Ticket viewss
+# Ticket views
 urlpatterns += patterns('ampta.views.ticket_views',
     # tickets
     url(r'^tickets/$', 'index', name='tickets'),
+    # tickets.json|xml
+    url(r'^tickets\.(?P<extension>(json)|(xml))$', 'index', name='tickets'),
     # tickets/1
     url(r'^tickets/(?P<ticket_id>\d+)/$', 'show', name="ticket"),
     # projects/1/tickets
@@ -54,5 +60,6 @@ urlpatterns += patterns('ampta.views.ticket_views',
     url(r'^projects/(?P<project_id>\d+)/tickets/(?P<ticket_id>\d+)/edit/$', 'edit_update', name='edit_project_ticket'),
     # projects/1/tickets/1/delete
     url(r'^projects/(?P<project_id>\d+)/tickets/(?P<ticket_id>\d+)/delete/$', 'delete', name='delete_project_ticket'),
+
 )
 

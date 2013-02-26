@@ -3,14 +3,18 @@ from ampta.models import Project
 from ampta.forms import ProjectForm
 import datetime
 from django.http import HttpResponse, Http404
+from django.contrib.auth.decorators import login_required
 from ampta.modules.decorators import get_project_if_member
 
 
+@login_required(login_url='/login')
 def index(request):
     projects = get_list_or_404(Project.objects.order_by('-date_added'))
-    return render(request, 'projects/index.html', {'projects': projects, 'projects_active': True})
+    return render(request, 'projects/index.html', 
+                 {'projects': projects, 'projects_active': True})
 
 
+@login_required(login_url='/login')
 @get_project_if_member
 def show(request, project_id=None, project=None):
     if not project:
@@ -18,6 +22,7 @@ def show(request, project_id=None, project=None):
     return render(request, 'projects/show.html', {'project': project})
 
 
+@login_required(login_url='/login')
 def new_create(request):
     if request.method == 'POST':
         form = ProjectForm(request.POST)
@@ -29,9 +34,12 @@ def new_create(request):
             return redirect('projects')
     else:
         form = ProjectForm()
-    return render(request, 'projects/new.html', {'form': form, 'title': 'Create project'})
+    return render(request, 'projects/new.html', 
+                 {'form': form, 'title': 'Create project', 
+                 'create_projects_active': True})
 
 
+@login_required(login_url='/login')
 def edit_update(request, project_id=None):
     project = get_object_or_404(Project, id=project_id)
     if project.owned_by_user(request.user):
@@ -47,10 +55,13 @@ def edit_update(request, project_id=None):
         else:
             form = ProjectForm(instance=project)
     else:
-        return render(request, 'shared/error.html', {'error_type': 'permission'})
-    return render(request, 'projects/new.html', {'form': form, 'title': 'Update project'})
+        return render(request, 'shared/error.html', 
+                     {'error_type': 'permission'})
+    return render(request, 'projects/new.html', 
+                 {'form': form, 'title': 'Update project'})
 
 
+@login_required(login_url='/login')
 def delete(request, project_id=None):
     if request.method == 'POST':
         project = get_object_or_404(Project, id=project_id)

@@ -6,8 +6,10 @@ from ampta.models import Project, Ticket
 
 
 class LoginForm(forms.Form):
-    username = forms.CharField(max_length=20)
-    password = forms.CharField(max_length=40, widget=forms.PasswordInput)
+    username = forms.CharField(max_length=20,
+                               widget=forms.TextInput(attrs={'placeholder': 'Username'}))
+    password = forms.CharField(max_length=40, 
+                               widget=forms.PasswordInput(attrs={'placeholder': 'Password'}))
 
 
 class ProjectForm(ModelForm):
