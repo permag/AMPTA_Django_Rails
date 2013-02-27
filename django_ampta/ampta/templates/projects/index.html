@@ -8,17 +8,17 @@
 <ul class="allProjects">
 {% for p in projects %}
 	{% if p|user_is_project_member_or_owner:user %}
-	<li>
-		<a href="{% url project p.id %}">{{ p.name }}</a> 
-		<span class="badge badge-success" title="Users">{{ p.users.count }}</span>
-		<span class="badge badge-warning" title="Tickets">{{ p.tickets.count }}</span>
-		<span class="label label-info" title="You are member in this project">member</span>
-		<ul>
-			<li>{{ p.description|slice:":40" }}...</li>
-		</ul>
+	<li class="allProjectsEach">
+		<a href="{% url project p.id %}">{{ p.name }}</a>
+		<div>
+			<span class="badge badge-success" title="Users">{{ p.users.count }}</span>
+			<span class="badge badge-warning" title="Tickets">{{ p.tickets.count }}</span>
+			<span class="label label-info" title="You are member of this project">member</span>
+		</div>
+		<p>{{ p.description|slice:":40" }}...</p>
 	</li>
 	{% else %}
-	<li>{{ p.name }} <span class="label label-important">private</span></li>
+	<li class="allProjectsEachPrivate">{{ p.name }} <span class="label label-important">private</span></li>
 	{% endif%}
 {% endfor %}
 </ul>

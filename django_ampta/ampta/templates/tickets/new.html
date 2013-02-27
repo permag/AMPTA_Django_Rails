@@ -3,11 +3,11 @@
 {% block title %}{{block.super}} | New ticket{% endblock%}
 
 {% block content %}
-<h3>{{ title }}</h3>
+<h3>{{ header }}</h3>
 
 <form action="" method="POST">{% csrf_token %}
 	{{ form.as_p }}
-	<input type="submit" value="{{ title|default:"Submit" }}" class="btn" />
+	<input type="submit" value="{{ button|default:"Submit" }}" class="btn" />
 </form>
 
 {% endblock %}

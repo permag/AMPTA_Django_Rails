@@ -52,7 +52,7 @@ def new_create(request, project_id=None, project=None):
     else:
         form = TicketForm()
     return render(request, 'tickets/new.html', 
-                 {'form': form, 'title': 'Create ticket'})
+                 {'form': form, 'header': 'Create ticket', 'button': 'Create ticket'})
 
 
 @login_required(login_url='/login')
@@ -74,7 +74,8 @@ def edit_update(request, project_id=None, ticket_id=None):
             form = TicketForm(instance=ticket)
     else:
         return render(request, 'shared/error.html', {'error_type': 'permission'})
-    return render(request, 'tickets/new.html', {'form': form, 'title': 'Update ticket'})
+    return render(request, 'tickets/new.html', {'form': form, 'header': 'Edit ticket', 
+                  'button': 'Update ticket'})
 
 
 @login_required(login_url='/login')

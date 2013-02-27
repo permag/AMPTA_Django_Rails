@@ -37,7 +37,7 @@ def new_create(request):
     else:
         form = ProjectForm(request.user)  # exclude current user
     return render(request, 'projects/new.html', 
-                 {'form': form, 'title': 'Create project', 
+                 {'form': form, 'button': 'Create project', 'header': 'Create project',  
                  'create_projects_active': True})
 
 
@@ -61,7 +61,7 @@ def edit_update(request, project_id=None):
         return render(request, 'shared/error.html', 
                      {'error_type': 'permission'})
     return render(request, 'projects/new.html', 
-                 {'form': form, 'title': 'Update project'})
+                 {'form': form, 'header': 'Edit project', 'button': 'Update project'})
 
 
 @login_required(login_url='/login')

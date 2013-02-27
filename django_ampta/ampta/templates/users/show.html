@@ -6,9 +6,9 @@
 <h3>{{ the_user.get_full_name }}</h3>
 
 <p><strong>Username:</strong> {{ the_user.username }}</p>
-<p><strong>E-mail:</strong> {{ the_user.email }}</p>
-<p><strong>Date joined:</strong> {{ the_user.date_joined|date:"Y-m-d" }}</p>
-<p><strong>Last seen:</strong> {{ the_user.last_login|date:"Y-m-d H:i:s" }}</p>
+<p><strong>E-mail:</strong> {{ the_user.email|default:"-" }}</p>
+<p><strong>Member since:</strong> {{ the_user.date_joined|date:"Y-m-d" }}</p>
+<p><strong>Last login:</strong> {{ the_user.last_login|date:"Y-m-d H:i:s" }}</p>
 <p><strong>Projects:</strong> <span class="badge">{{ the_user.projects.count }}</span></p>
 
 {% endblock %}

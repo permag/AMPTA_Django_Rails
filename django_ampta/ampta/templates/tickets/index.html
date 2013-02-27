@@ -7,7 +7,10 @@
 {% if tickets.count > 0 %}
 <ul>
 {% for t in tickets %}
-	<li><a href="{% url project_ticket t.project.id t.id %}">{{ t.name }}</a></li>
+	<li class="allTicketsEach">
+		<a href="{% url project_ticket t.project.id t.id %}">{{ t.name }}</a>
+		<p>{{ t.description|slice:":40" }} ...</p>
+	</li>
 {% endfor %}
 </ul>
 {% else %}

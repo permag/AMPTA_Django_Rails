@@ -122,11 +122,32 @@ label {
   font-weight: bold;
 }
 
-.allProjects li {
-  padding: 7px 0;
-  font-size: 18px;
+.allProjects a {
+  color: white;
+  font-weight: bold;
 }
-.allProjects li li {
+.allProjects li {
+  padding: 7px;
+  font-size: 18px;
+  list-style-type: none;
+}
+.allProjects li p {
   font-size: 14px;
   list-style-type: none;
+}
+.allProjectsEach, .allProjectsEachPrivate {
+  background: #baac8e;
+  margin: 5px;
+  width: 250;
+  float: left;
+}
+.allProjectsEachPrivate {
+  opacity: 0.7;
+}
+
+.allTicketsEach {
+  font-size: 16px;
+}
+.allTicketsEach p {
+  font-size: 12px;
 }

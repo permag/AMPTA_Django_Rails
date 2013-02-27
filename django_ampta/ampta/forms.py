@@ -21,13 +21,13 @@ class RegisterForm(forms.Form):
     def clean_username(self):
         data = self.cleaned_data['username']
         if User.objects.filter(username=data).exists():
-            raise forms.ValidationError('This username already used')
+            raise forms.ValidationError('This username is already registered')
         return data
 
     def clean_email(self):
         data = self.cleaned_data['email']
         if User.objects.filter(email=data).exists():
-            raise forms.ValidationError('This e-mail already used')
+            raise forms.ValidationError('This e-mail is already registered')
         return data
 
 
