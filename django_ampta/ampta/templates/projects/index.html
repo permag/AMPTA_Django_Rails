@@ -1,11 +1,25 @@
 {% extends 'shared/base.html' %}
-{% block title %}{{block.super}} | Projects{% endblock%}
+{% load custom_filters %}
+
+{% block title %}{{block.super}} | All projects{% endblock%}
 
 {% block content %}
 <h3>All projects</h3>
-<ul>
+<ul class="allProjects">
 {% for p in projects %}
-	<li><a href="{% url project p.id %}">{{ p.name }}</a></li>
+	{% if p|user_is_project_member_or_owner:user %}
+	<li>
+		<a href="{% url project p.id %}">{{ p.name }}</a> 
+		<span class="badge badge-success" title="Users">{{ p.users.count }}</span>
+		<span class="badge badge-warning" title="Tickets">{{ p.tickets.count }}</span>
+		<span class="label label-info" title="You are member in this project">member</span>
+		<ul>
+			<li>{{ p.description|slice:":40" }}...</li>
+		</ul>
+	</li>
+	{% else %}
+	<li>{{ p.name }} <span class="label label-important">private</span></li>
+	{% endif%}
 {% endfor %}
 </ul>
 {% endblock %}

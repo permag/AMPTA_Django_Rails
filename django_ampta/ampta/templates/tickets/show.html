@@ -17,15 +17,21 @@
 <p>{{ ticket.status.status_name }}</p>
 
 <h4>Owner</h4>
-<p><a href="">{{ ticket.owner.get_full_name }}</a></p>
+{% if ticket|ticket_owned_by_user:user %}
+
+<p><a href=""><strong>You</strong></a></p>
+{% else %}
+
+<p><a href="">{{ ticket.owner.get_full_name }} ({{ ticket.owner.username }})</a></p>
+{% endif %}
 
 
 {% if ticket|project_or_ticket_owned_by_user:user %}
 
-<p><a href="{% url edit_project_ticket ticket.project.id ticket.id %}">Edit</a></p>
 
 <form action="{% url delete_project_ticket ticket.project.id ticket.id %}" method="POST">{% csrf_token %}
-	<input type="submit" value="Delete" class="confirmDelete" />
+	<a href="{% url edit_project_ticket ticket.project.id ticket.id %}" class="btn">Edit</a>
+	<input type="submit" value="Delete" class="confirmDelete btn" />
 </form>
 
 {% endif %}

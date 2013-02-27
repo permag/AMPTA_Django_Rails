@@ -118,3 +118,12 @@ label {
 .messages {
   font-weight: bold;
 }
+
+.allProjects li {
+  padding: 7px 0;
+  font-size: 18px;
+}
+.allProjects li li {
+  font-size: 14px;
+  list-style-type: none;
+}

@@ -29,7 +29,7 @@
 									<a href="{% url home %}">Home</a>
 								</li>
 								<li {% if all_users_active %}class="active"{% endif %}>
-									<a href="#">All users</a>
+									<a href="{% url users %}">All users</a>
 								</li>
 								<li {% if projects_active %}class="active"{% endif %}>
 									<a href="{% url projects %}">All projects</a>

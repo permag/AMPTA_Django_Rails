@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_list_or_404, get_object_or_404
 from django.http import HttpResponse, HttpResponseServerError
 from ampta.forms import LoginForm, RegisterForm
 from django.contrib.auth import authenticate, logout, login
@@ -67,3 +67,14 @@ def create_user(request):
     else:
         form = RegisterForm()
     return render(request, 'general/register.html', {'form': form})
+
+
+def user_index(request):
+    users = get_list_or_404(User.objects.all())
+    return render(request, 'users/index.html', {'users': users})
+
+
+def user_show(request, user_id=None):
+    the_user = get_object_or_404(User, id=user_id)
+    return render(request, 'users/show.html', {'the_user': the_user})
+

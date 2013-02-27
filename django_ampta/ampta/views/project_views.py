@@ -1,5 +1,6 @@
 from django.shortcuts import get_list_or_404, get_object_or_404, render, redirect
 from ampta.models import Project
+from django.contrib.auth.models import User
 from ampta.forms import ProjectForm
 import datetime
 from django.http import HttpResponse, Http404, HttpResponseServerError
@@ -25,15 +26,16 @@ def show(request, project_id=None, project=None):
 @login_required(login_url='/login')
 def new_create(request):
     if request.method == 'POST':
-        form = ProjectForm(request.POST)
+        form = ProjectForm(request.user, request.POST)  # exclude current user
         if form.is_valid():
             form.instance.owner = request.user
             form.instance.date_added = datetime.datetime.today()
             form.instance.date_updated = datetime.datetime.today()
             form.save()
+            form.instance.users.add(request.user)  # add owner to project.users. after save.
             return redirect('projects')
     else:
-        form = ProjectForm()
+        form = ProjectForm(request.user)  # exclude current user
     return render(request, 'projects/new.html', 
                  {'form': form, 'title': 'Create project', 
                  'create_projects_active': True})
@@ -44,16 +46,17 @@ def edit_update(request, project_id=None):
     project = get_object_or_404(Project, id=project_id)
     if project.owned_by_user(request.user):
         if request.method == 'POST':
-            form = ProjectForm(request.POST, instance=project)
+            form = ProjectForm(request.user, request.POST, instance=project)  # exclude current user
             if form.is_valid():
                 try:
                     form.instance.date_updated = datetime.datetime.today()
                     form.save()
+                    form.instance.users.add(request.user)  # add owner to project.users. after save.
                     return redirect(project)
                 except:
                     return HttpResponseServerError()
         else:
-            form = ProjectForm(instance=project)
+            form = ProjectForm(request.user, instance=project)
     else:
         return render(request, 'shared/error.html', 
                      {'error_type': 'permission'})

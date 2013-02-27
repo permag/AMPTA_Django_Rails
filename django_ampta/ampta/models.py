@@ -8,7 +8,7 @@ class Project(models.Model):
     description = models.TextField()
     start_date = models.DateField()
     end_date = models.DateField()
-    users = models.ManyToManyField(User, related_name='projects')
+    users = models.ManyToManyField(User, related_name='projects', blank=True)
     owner = models.ForeignKey(User, related_name='projects_owned_by_user')
     date_added = models.DateTimeField()
     date_updated = models.DateTimeField()

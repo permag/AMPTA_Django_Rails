@@ -7,10 +7,11 @@
 <h3>{{ project.name }}</h3>
 <p>{{ project.description }}</p>
 
+<p><a href="{% url new_project_ticket project.id %}" class="btn">Add ticket</a></p>
+
 <h4>Start</h4>
 <p>{{ project.start_date }}</p>
 
-<p><a href="{% url new_project_ticket project.id %}">Add ticket</a></p>
 
 <h4>End</h4>
 <p>{{ project.end_date }}</p>
@@ -19,7 +20,6 @@
 {% if project.tickets.count %}
 <ul>
 	{% for t in project.tickets.all %}
-	<!--<li><a href="{% url project_ticket t.project.id t.id %}">{{ t.name }}</a></li>-->
 	<li><a href="{{ t.get_absolute_url }}">{{ t.name }}</a></li>
 	{% endfor %}
 </ul>
@@ -30,19 +30,30 @@
 <h4>Users</h4>
 <ul>
 {% for u in project.users.all %}
-	<li>{{ u.get_full_name }}</li>
+	{% if project|project_owned_by_user:u %}
+	<li><strong>You</strong></li>
+	{% else %}
+	<li>{{ u.get_full_name }} ({{ u.username }})</li>
+	{% endif %}
 {% endfor %}
 </ul>
 
 <h4>Owner</h4>
-<p><a href="">{{ project.owner.get_full_name }}</a></p>
+{% if project|project_owned_by_user:user %}
+
+<p><a href=""><strong>You</strong></a></p>
+{% else %}
+
+<p><a href="">{{ project.owner.get_full_name }} ({{ project.owner.username }})</a></p>
+{% endif %}
+
 
 {% if project|project_owned_by_user:user %}
 
-<p><a href="{% url edit_project project.id %}">Edit</a></p>
 
 <form action="{% url delete_project project.id %}" method="POST">{% csrf_token %}
-	<input type="submit" value="Delete" class="confirmDelete" />
+	<a href="{% url edit_project project.id %}" class="btn">Edit</a>
+	<input type="submit" value="Delete" class="confirmDelete btn" />
 </form>
 
 {% endif %}

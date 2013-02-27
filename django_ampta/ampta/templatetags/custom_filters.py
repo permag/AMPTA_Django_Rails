@@ -15,6 +15,16 @@ def project_owned_by_user(project, user):
     return project.owned_by_user(user)
 
 
+@register.filter(name='ticket_owned_by_user')
+def ticket_owned_by_user(ticket, user):
+    return ticket.owned_by_user(user)
+
+
 @register.filter(name='project_or_ticket_owned_by_user')
 def project_or_ticket_owned_by_user(ticket, user):
 	return ticket.owned_by_user(user) or ticket.project.owned_by_user(user)
+
+
+@register.filter
+def user_is_project_member_or_owner(project, user):
+	return project.owned_by_user(user) or project.has_user(user)

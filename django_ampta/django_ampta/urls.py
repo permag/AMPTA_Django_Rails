@@ -27,10 +27,14 @@ urlpatterns += patterns('ampta.views.views',
     # logout
     url(r'^logout/$', 'logout_user', name='logout'),
     # register
-    url(r'^register/$', 'create_user', name="create_user"),
+    url(r'^register/$', 'create_user', name='create_user'),
+    # users
+    url(r'^users/$', 'user_index', name='users'),
+    # users/1
+    url(r'^users/(?P<user_id>\d+)/$', 'user_show', name='user'),
 )
 
-# Project viewss
+# Project views
 urlpatterns += patterns('ampta.views.project_views',
     # projects
     url(r'^projects/$', 'index', name='projects'),

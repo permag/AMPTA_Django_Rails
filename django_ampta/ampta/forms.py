@@ -22,8 +22,13 @@ class RegisterForm(forms.Form):
 class ProjectForm(ModelForm):
     start_date = forms.DateField(initial=datetime.date.today)  # define manually to set initial value
     users = forms.ModelMultipleChoiceField(User.objects.all(), # define manually to customize help_text
-            help_text='Select many by holding down ctrl or cmd key.')
+            help_text='Select many by holding down ctrl or cmd key.',
+            required=False)
     error_css_class = 'validationError'  # add css class to form field with error
+
+    def __init__(self, current_user, *args, **kwargs):
+        super(ProjectForm, self).__init__(*args, **kwargs)  # exclude current user from users MultipleChoiceField
+        self.fields['users'].queryset = self.fields['users'].queryset.exclude(id=current_user.id)
 
     class Meta:
         model = Project
