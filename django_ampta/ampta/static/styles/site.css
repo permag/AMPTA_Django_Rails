@@ -71,6 +71,9 @@ p {
   margin-right: 7px;
   color: white;
 }
+.active_user a {
+  color: white;
+}
 
 .sidenav {
   width: 220px;

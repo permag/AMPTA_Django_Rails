@@ -69,11 +69,13 @@ def create_user(request):
     return render(request, 'general/register.html', {'form': form})
 
 
+@login_required(login_url='/login')
 def user_index(request):
     users = get_list_or_404(User.objects.all())
     return render(request, 'users/index.html', {'users': users})
 
 
+@login_required(login_url='/login')
 def user_show(request, user_id=None):
     the_user = get_object_or_404(User, id=user_id)
     return render(request, 'users/show.html', {'the_user': the_user})

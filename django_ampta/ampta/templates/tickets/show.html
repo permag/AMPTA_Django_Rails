@@ -19,7 +19,7 @@
 <h4>Owner</h4>
 {% if ticket|ticket_owned_by_user:user %}
 
-<p><a href=""><strong>You</strong></a></p>
+<p><a href="{% url user ticket.owner.id %}"><strong>You</strong></a></p>
 {% else %}
 
 <p><a href="">{{ ticket.owner.get_full_name }} ({{ ticket.owner.username }})</a></p>

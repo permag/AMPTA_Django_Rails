@@ -56,3 +56,5 @@ class Ticket(models.Model):
     def get_absolute_url(self):
         return reverse('project_ticket', args=[str(self.project.id), str(self.id)])
 
+
+

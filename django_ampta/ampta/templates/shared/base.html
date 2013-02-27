@@ -40,7 +40,9 @@
 							</ul>
 						</div>
 						<span class="sign_out pull-right"><a href="{% url logout %}">Sign out</a></span>
-						<span class="active_user pull-right">{{ user.get_full_name }}</span>
+						<span class="active_user pull-right">
+							<a href="{% url user user.id %}">{{ user.get_full_name }}</a>
+						</span>
 					</div>
 				</div>
 			</nav>
