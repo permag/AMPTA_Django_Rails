@@ -4,9 +4,13 @@
 
 {% block content %}
 <h3>All your Tickets</h3>
+{% if tickets.count > 0 %}
 <ul>
 {% for t in tickets %}
 	<li><a href="{% url project_ticket t.project.id t.id %}">{{ t.name }}</a></li>
 {% endfor %}
 </ul>
+{% else %}
+	<p>You have no tickets.</p>
+{% endif %}
 {% endblock %}

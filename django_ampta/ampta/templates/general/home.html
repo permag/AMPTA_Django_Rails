@@ -3,7 +3,16 @@
 {% block title %}{{block.super}} | Home{% endblock%}
 
 {% block content %}
-<h3>Welcome</h3>
-<p>...home</p>
+
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+
+<h3>Welcome to AMPTA</h3>
+<p>A Minimal Project Tracker Application</p>
 
 {% endblock %}

@@ -1,6 +1,6 @@
 {% extends 'shared/base.html' %}
 
-{% block title %}{{block.super}} | Login{% endblock%}
+{% block title %}{{block.super}} | Register{% endblock%}
 
 {% block styles %}
 {{ block.super }}
@@ -14,23 +14,15 @@
 		<div class="content">
 			<div class="row">
 				<div class="login-form">
-					<h2>Login</h2>
+					<h2>Register</h2>
 					<h4 class="redAlert">{{ message }}</h4>
 					<form action="" method="POST">{% csrf_token %}
 						<fieldset>
-							<div class="clearfix">
-								{{ form.username.errors }}
-								{{ form.username }}
-							</div>
-							<div class="clearfix">
-								{{ form.password.errors }}
-								{{ form.password }}
-							</div>
-							<input type="submit" value="Login" class="btn" />
+							{{ form.as_p }}
+							<input type="submit" value="Register" class="btn" />
 						</fieldset>
 					</form>
 				</div>
-				<p class="pull-right"><a href="{% url create_user %}">Register</a></p>
 			</div>
 		</div>
 	</div>

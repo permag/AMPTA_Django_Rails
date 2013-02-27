@@ -1,8 +1,10 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponse
-from ampta.forms import LoginForm
+from django.http import HttpResponse, HttpResponseServerError
+from ampta.forms import LoginForm, RegisterForm
 from django.contrib.auth import authenticate, logout, login
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
+from django.contrib import messages
 
 
 # General views
@@ -12,8 +14,10 @@ def home_index(request):
     return render(request, 'general/home.html', {'home_active': True})
 
 
-def user_login(request):
+def login_user(request):
     message = ''
+    if request.user.is_authenticated():
+        return redirect('home')
     if request.method == 'POST':
         form = LoginForm(request.POST)
         if form.is_valid():
@@ -23,16 +27,43 @@ def user_login(request):
             if user is not None:
                 if user.is_active:
                     login(request, user)
+                    messages.info(request, 'Welcome back, %s!' % user.first_name)
                     return redirect('home')
                 else:
-                    return HttpResponse("<h1>Your account is disabled</h1>")
+                    return HttpResponse('<h1>Your account is disabled</h1>')
             else:
-                message = "Wrong username or password"
+                message = 'Wrong username or password'
     else:
         form = LoginForm()
     return render(request, 'general/login.html', {'form': form, 'message': message})
 
 
-def user_logout(request):
+def logout_user(request):
     logout(request)
     return redirect('login')
+
+
+def create_user(request):
+    if request.method == 'POST':
+        form = RegisterForm(request.POST)
+        if form.is_valid():
+            username = form.cleaned_data['username']
+            password = form.cleaned_data['password']
+            email = form.cleaned_data['email']
+            first_name = form.cleaned_data['first_name']
+            last_name = form.cleaned_data['last_name']
+            user = User.objects.create_user(username=username, email=email, 
+                                            password=password)
+            user.first_name = first_name
+            user.last_name = last_name
+            try:
+                user.save()
+                user = authenticate(username=username, password=password)
+                login(request, user)
+                messages.info(request, 'Thanks for registering. You are now logged in.')
+                return redirect('home')
+            except:
+                return HttpResponseServerError()
+    else:
+        form = RegisterForm()
+    return render(request, 'general/register.html', {'form': form})

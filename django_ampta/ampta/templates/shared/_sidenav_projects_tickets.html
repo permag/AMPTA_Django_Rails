@@ -3,7 +3,7 @@
 <!-- get projects for user with custom_filter method -->
 <ul>
 {% with projects=user|user_projects %}
-{% for p in projects.all %}
+{% for p in projects %}
 	<li>
 		<a href="{% url project p.id %}">{{ p.name }}</a>
 		{% if p|project_owned_by_user:user %}(admin){% endif %}

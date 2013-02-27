@@ -18,7 +18,7 @@ def index(request, project_id=None, extension=None):
         else:
             raise Http404
     else:
-        tickets = get_list_or_404(request.user.tickets.order_by('-date_added'))
+        tickets = request.user.tickets.order_by('-date_added')
     if extension == 'json':
         data = serializers.serialize('json', tickets)
         return HttpResponse(data, mimetype='application/json')

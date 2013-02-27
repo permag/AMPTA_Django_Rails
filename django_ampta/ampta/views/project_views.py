@@ -2,7 +2,7 @@ from django.shortcuts import get_list_or_404, get_object_or_404, render, redirec
 from ampta.models import Project
 from ampta.forms import ProjectForm
 import datetime
-from django.http import HttpResponse, Http404
+from django.http import HttpResponse, Http404, HttpResponseServerError
 from django.contrib.auth.decorators import login_required
 from ampta.modules.decorators import get_project_if_member
 
