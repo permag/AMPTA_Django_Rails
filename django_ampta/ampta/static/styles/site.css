@@ -147,7 +147,14 @@ label {
 
 .allTicketsEach {
   font-size: 16px;
+  background: #d9bd48;
+  margin: 5px;
+  padding: 5px;
+  width: 210px;
+  float: left;
+  list-style-type: none;
 }
 .allTicketsEach p {
   font-size: 12px;
+  margin: 0;
 }

@@ -11,18 +11,21 @@ from django.core import serializers
 
 @login_required(login_url='/login')
 def index(request, project_id=None, extension=None):
+    header = ''
     if project_id:
         project = get_object_or_404(Project, id=project_id)
         if project.has_user(request.user) or project.owned_by_user(request.user):
             tickets = get_list_or_404(project.tickets.order_by('-date_added'))
+            header = 'Tickets for: %s' % project.name
         else:
             raise Http404
     else:
         tickets = request.user.tickets.order_by('-date_added')
+        header = 'All your tickets'
     if extension == 'json':
         data = serializers.serialize('json', tickets)
         return HttpResponse(data, mimetype='application/json')
-    return render(request, 'tickets/index.html', {'tickets': tickets})
+    return render(request, 'tickets/index.html', {'tickets': tickets, 'header': header})
 
 
 @login_required(login_url='/login')

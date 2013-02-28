@@ -12,7 +12,13 @@
 		<a href="{% url project p.id %}">{{ p.name }}</a>
 		<div>
 			<span class="badge badge-success" title="Users">{{ p.users.count }}</span>
-			<span class="badge badge-warning" title="Tickets">{{ p.tickets.count }}</span>
+			<span class="badge badge-warning" title="Tickets">
+				{% if p.tickets.count > 0 %}
+				<a href="{% url project_tickets p.id %}">{{ p.tickets.count }}</a>
+				{% else %}
+				{{ p.tickets.count }}
+				{% endif %}
+			</span>
 			<span class="label label-info" title="You are member of this project">member</span>
 		</div>
 		<p>{{ p.description|slice:":40" }}...</p>

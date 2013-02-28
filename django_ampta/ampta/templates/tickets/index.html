@@ -3,13 +3,16 @@
 {% block title %}{{block.super}} | Tickets{% endblock%}
 
 {% block content %}
-<h3>All your Tickets</h3>
+<h3>{{ header }}</h3>
 {% if tickets.count > 0 %}
 <ul>
 {% for t in tickets %}
 	<li class="allTicketsEach">
 		<a href="{% url project_ticket t.project.id t.id %}">{{ t.name }}</a>
 		<p>{{ t.description|slice:":40" }} ...</p>
+		<p><strong>Status:</strong> {{ t.status }}</p>
+		<p><strong>Owner:</strong> <a href="{% url user t.owner.id %}">{{ t.owner.get_full_name }}</a></p>
+		<p>{{ t.start_date|date:"Y-m-d" }} - {{ t.end_date|date:"Y-m-d" }}</p>
 	</li>
 {% endfor %}
 </ul>
