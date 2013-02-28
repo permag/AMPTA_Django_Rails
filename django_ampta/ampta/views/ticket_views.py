@@ -6,7 +6,7 @@ import datetime
 from django.http import HttpResponse, HttpResponseServerError, Http404
 from django.contrib.auth.decorators import login_required
 from ampta.modules.decorators import get_project_if_member, get_ticket_if_member
-from django.core import serializers
+from django.utils import simplejson
 
 
 @login_required(login_url='/login')
@@ -23,8 +23,14 @@ def index(request, project_id=None, extension=None):
         tickets = request.user.tickets.order_by('-date_added')
         header = 'All your tickets'
     if extension == 'json':
-        data = serializers.serialize('json', tickets)
-        return HttpResponse(data, mimetype='application/json')
+        json = simplejson.dumps([{'id': t.id, 
+                                  'name': t.name, 
+                                  'description': t.description, 
+                                  'project': str(t.project),
+                                  'status': str(t.status),
+                                  'start_date': str(t.start_date),
+                                  'end_date': str(t.end_date)} for t in tickets])
+        return HttpResponse(json, mimetype='application/json')
     return render(request, 'tickets/index.html', {'tickets': tickets, 'header': header})
 
 
@@ -55,7 +61,7 @@ def new_create(request, project_id=None, project=None):
     else:
         form = TicketForm()
     return render(request, 'tickets/new.html', 
-                 {'form': form, 'header': 'Create ticket', 'button': 'Create ticket'})
+                 {'form': form, 'header': 'New ticket', 'button': 'Create ticket'})
 
 
 @login_required(login_url='/login')
