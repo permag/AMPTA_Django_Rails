@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
-from django.core.urlresolvers import reverse
+from django.core.urlresolvers import reverse 
+from django.core.exceptions import ValidationError
 
 
 class Project(models.Model):
@@ -55,6 +56,12 @@ class Ticket(models.Model):
 
     def get_absolute_url(self):
         return reverse('project_ticket', args=[str(self.project.id), str(self.id)])
+
+    # def clean(self):
+    #     data = self.end_date
+    #     if data > self.project.end_date:
+    #         raise ValidationError('End date cannot be later than project end date (%s)' % self.project.end_date)
+    #     return data
 
 
 

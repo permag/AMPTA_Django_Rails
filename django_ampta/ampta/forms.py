@@ -46,17 +46,11 @@ class ProjectForm(ModelForm):
         model = Project
         exclude = ('owner', 'date_added', 'date_updated')
 
-    def clean_start_date(self):
-        data = self.cleaned_data['start_date']
-        if data < datetime.date.today():
-            raise forms.ValidationError('Start date cannot be a past date')
+    def clean_end_date(self):
+        data = self.cleaned_data['end_date']
+        if data <= self.cleaned_data['start_date']:
+            raise forms.ValidationError('End date must be later than start date')
         return data
-
-    # def clean_end_date(self):
-    #     data = self.cleaned_data['end_date']
-    #     if data <= self.cleaned_data['start_date']:
-    #         raise forms.ValidationError('End date must be later than start date')
-    #     return data
 
 
 class TicketForm(ModelForm):
@@ -67,3 +61,11 @@ class TicketForm(ModelForm):
         model = Ticket
         exclude = ('project', 'owner', 'date_added', 'date_updated')
 
+    def clean_end_date(self):
+        end_date = self.cleaned_data['end_date']
+        project_start_date = self.instance.project.start_date
+        if end_date < project_start_date:
+            raise forms.ValidationError('End date must be later than project start date (%s)' % project_start_date)
+        if end_date <= self.cleaned_data['start_date']:
+            raise forms.ValidationError('End date must be later than start date')
+        return end_date
