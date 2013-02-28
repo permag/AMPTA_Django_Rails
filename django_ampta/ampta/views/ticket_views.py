@@ -23,7 +23,9 @@ def index(request, project_id=None, extension=None):
         tickets = request.user.tickets.order_by('-date_added')
         header = 'All your tickets'
     if extension == 'json':
-        json = simplejson.dumps([{'id': t.id, 
+        json = simplejson.dumps([{'ticket_url': 'http://ampta.com/projects/{0}/tickets/{1}/'.format(t.project.id, t.id),
+                                  'project_url': 'http://ampta.com/projects/%i/' % t.project.id,
+                                  'id': t.id, 
                                   'name': t.name, 
                                   'description': t.description, 
                                   'project': str(t.project),
