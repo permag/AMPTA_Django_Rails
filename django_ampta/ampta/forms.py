@@ -46,6 +46,18 @@ class ProjectForm(ModelForm):
         model = Project
         exclude = ('owner', 'date_added', 'date_updated')
 
+    def clean_start_date(self):
+        data = self.cleaned_data['start_date']
+        if data < datetime.date.today():
+            raise forms.ValidationError('Start date cannot be a past date')
+        return data
+
+    # def clean_end_date(self):
+    #     data = self.cleaned_data['end_date']
+    #     if data <= self.cleaned_data['start_date']:
+    #         raise forms.ValidationError('End date must be later than start date')
+    #     return data
+
 
 class TicketForm(ModelForm):
     start_date = forms.DateField(initial=datetime.date.today)

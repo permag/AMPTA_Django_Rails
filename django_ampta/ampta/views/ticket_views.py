@@ -23,16 +23,7 @@ def index(request, project_id=None, extension=None):
         tickets = request.user.tickets.order_by('-date_added')
         header = 'All your tickets'
     if extension == 'json':
-        json = simplejson.dumps([{'ticket_url': 'http://ampta.com/projects/{0}/tickets/{1}/'.format(t.project.id, t.id),
-                                  'project_url': 'http://ampta.com/projects/%i/' % t.project.id,
-                                  'id': t.id, 
-                                  'name': t.name, 
-                                  'description': t.description, 
-                                  'project': str(t.project),
-                                  'status': str(t.status),
-                                  'start_date': str(t.start_date),
-                                  'end_date': str(t.end_date)} for t in tickets])
-        return HttpResponse(json, mimetype='application/json')
+        return tickets_to_json(tickets)
     return render(request, 'tickets/index.html', {'tickets': tickets, 'header': header})
 
 
@@ -105,4 +96,17 @@ def delete(request, project_id=None, ticket_id=None):
             return HttpResponse("You don't have permissions to do that.")
     else:
         raise Http404
+
+
+def tickets_to_json(tickets):
+    json = simplejson.dumps([{'ticket_url': 'http://ampta.com/projects/{0}/tickets/{1}/'.format(t.project.id, t.id),
+                              'project_url': 'http://ampta.com/projects/%i/' % t.project.id,
+                              'id': t.id, 
+                              'name': t.name, 
+                              'description': t.description, 
+                              'project': str(t.project),
+                              'status': str(t.status),
+                              'start_date': str(t.start_date),
+                              'end_date': str(t.end_date)} for t in tickets])
+    return HttpResponse(json, mimetype='application/json')
 

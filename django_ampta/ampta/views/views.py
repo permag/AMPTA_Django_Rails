@@ -72,7 +72,8 @@ def create_user(request):
 @login_required(login_url='/login')
 def user_index(request):
     users = get_list_or_404(User.objects.all())
-    return render(request, 'users/index.html', {'users': users})
+    return render(request, 'users/index.html', 
+                 {'users': users, 'all_users_active': True})
 
 
 @login_required(login_url='/login')
