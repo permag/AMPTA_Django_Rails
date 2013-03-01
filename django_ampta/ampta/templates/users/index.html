@@ -10,4 +10,23 @@
 {% endfor %}
 </ul>
 
+{# pagination #}
+<div class="pagination">
+    <span class="step-links">
+        {% if users.has_previous %}
+        	<a href="?p=1">first</a> | 
+            <a href="?p={{ users.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ users.number }} of {{ users.paginator.num_pages }}.
+        </span>
+
+        {% if users.has_next %}
+            <a href="?p={{ users.next_page_number }}">next</a> | 
+            <a href="?p={{ users.paginator.num_pages }}">last</a>
+        {% endif %}
+    </span>
+</div>
+
 {% endblock %}

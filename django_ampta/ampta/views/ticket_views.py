@@ -39,7 +39,6 @@ def show(request, project_id=None, ticket_id=None, ticket=None ):
 @get_project_if_member
 def new_create(request, project_id=None, project=None):
     if request.method == 'POST':
-        #project = get_object_or_404(Project, id=project_id)
         form = TicketForm(request.POST)
         if form.is_valid():
             form.instance.owner = request.user

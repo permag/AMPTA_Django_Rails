@@ -5,6 +5,7 @@ from django.contrib.auth import authenticate, logout, login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib import messages
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 
 # General views
@@ -72,6 +73,14 @@ def create_user(request):
 @login_required(login_url='/login')
 def user_index(request):
     users = get_list_or_404(User.objects.all())
+    paginator = Paginator(users, 20)  # nr objects/page
+    page = request.GET.get('p')
+    try:
+        users = paginator.page(page)
+    except PageNotAnInteger:
+        users = paginator.page(1)
+    except EmptyPage:
+        users = paginator.page(paginator.num_pages)
     return render(request, 'users/index.html', 
                  {'users': users, 'all_users_active': True})
 

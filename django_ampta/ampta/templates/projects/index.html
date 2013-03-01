@@ -28,4 +28,24 @@
 	{% endif%}
 {% endfor %}
 </ul>
+
+{# pagination #}
+<div class="pagination">
+    <span class="step-links">
+        {% if projects.has_previous %}
+        	<a href="?p=1">first</a> | 
+            <a href="?p={{ projects.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ projects.number }} of {{ projects.paginator.num_pages }}.
+        </span>
+
+        {% if projects.has_next %}
+            <a href="?p={{ projects.next_page_number }}">next</a> | 
+            <a href="?p={{ projects.paginator.num_pages }}">last</a>
+        {% endif %}
+    </span>
+</div>
+
 {% endblock %}

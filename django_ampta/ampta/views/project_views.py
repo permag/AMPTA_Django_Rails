@@ -6,11 +6,20 @@ import datetime
 from django.http import HttpResponse, Http404, HttpResponseServerError
 from django.contrib.auth.decorators import login_required
 from ampta.modules.decorators import get_project_if_member
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 
 @login_required(login_url='/login')
 def index(request):
     projects = get_list_or_404(Project.objects.order_by('-date_added'))
+    paginator = Paginator(projects, 6)  # nr objects/page
+    page = request.GET.get('p')
+    try:
+        projects = paginator.page(page)
+    except PageNotAnInteger:
+        projects = paginator.page(1)
+    except EmptyPage:
+        projects = paginator.page(paginator.num_pages)
     return render(request, 'projects/index.html', 
                  {'projects': projects, 'projects_active': True})
 

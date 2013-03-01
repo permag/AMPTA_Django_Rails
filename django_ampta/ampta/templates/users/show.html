@@ -8,7 +8,7 @@
 <p><strong>Username:</strong> {{ the_user.username }}</p>
 <p><strong>E-mail:</strong> {{ the_user.email|default:"-" }}</p>
 <p><strong>Member for:</strong> {{ the_user.date_joined|timesince }}</p>
-<p><strong>Last login:</strong> {{ the_user.last_login|timesince }} ago.</p>
+<p><strong>Last login:</strong> {{ the_user.last_login|timesince }} ago</p>
 <p><strong>Projects:</strong> <span class="badge">{{ the_user.projects.count }}</span></p>
 
 {% endblock %}
