@@ -30,6 +30,8 @@ urlpatterns += patterns('ampta.views.views',
     url(r'^register/$', 'create_user', name='create_user'),
     # users
     url(r'^users/$', 'user_index', name='users'),
+    # users/page/1 (paging)
+    url(r'^users/page/(?P<page>\d+)/$', 'user_index', name='users_page'),
     # users/1
     url(r'^users/(?P<user_id>\d+)/$', 'user_show', name='user'),
 )
@@ -38,6 +40,8 @@ urlpatterns += patterns('ampta.views.views',
 urlpatterns += patterns('ampta.views.project_views',
     # projects
     url(r'^projects/$', 'index', name='projects'),
+    # projects/page/1 (paging)
+    url(r'^projects/page/(?P<page>\d+)/', 'index', name='projects_page'),
     # projects/1
     url(r'^projects/(?P<project_id>\d+)/$', 'show', name='project'),
     # projects/new

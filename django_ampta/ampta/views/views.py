@@ -71,10 +71,9 @@ def create_user(request):
 
 
 @login_required(login_url='/login')
-def user_index(request):
-    users = get_list_or_404(User.objects.all())
+def user_index(request, page=None):
+    users = get_list_or_404(User.objects.order_by('last_name', 'first_name'))
     paginator = Paginator(users, 20)  # nr objects/page
-    page = request.GET.get('p')
     try:
         users = paginator.page(page)
     except PageNotAnInteger:
