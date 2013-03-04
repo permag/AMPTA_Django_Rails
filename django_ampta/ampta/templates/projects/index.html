@@ -22,6 +22,7 @@
 			<span class="label label-info" title="You are member of this project">member</span>
 		</div>
 		<p>{{ p.description|slice:":40" }}...</p>
+		<p class="allProjectsTimesince"> Started {{ p.start_date|timesince }} ago</p>
 	</li>
 	{% else %}
 	<li class="allProjectsEachPrivate">{{ p.name }} <span class="label label-important">private</span></li>

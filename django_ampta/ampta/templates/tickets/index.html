@@ -1,4 +1,5 @@
 {% extends 'shared/base.html' %}
+{% load custom_filters %}
 
 {% block title %}{{block.super}} | Tickets{% endblock%}
 
@@ -9,10 +10,14 @@
 {% for t in tickets %}
 	<li class="allTicketsEach">
 		<a href="{% url project_ticket t.project.id t.id %}">{{ t.name }}</a>
-		<p>{{ t.description|slice:":70" }} ...</p>
+		<p>{{ t.description|slice:":30" }} ...</p>
 		<p><strong>Status:</strong> {{ t.status }}</p>
 		<p><strong>Owner:</strong> <a href="{% url user t.owner.id %}">{{ t.owner.get_full_name }}</a></p>
-		<p>{{ t.start_date|date:"Y-m-d" }} - {{ t.end_date|date:"Y-m-d" }}</p>
+		{% if t.end_date|date_has_passed  %}
+		<p><strong>Time left:</strong> {{ t.end_date|timeuntil }}</p> {# custom filter #}
+		{% else %}
+		<p><strong>Time left:</strong> none</p>
+		{% endif %}
 	</li>
 {% endfor %}
 </ul>

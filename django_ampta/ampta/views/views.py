@@ -28,7 +28,7 @@ def login_user(request):
             if user is not None:
                 if user.is_active:
                     login(request, user)
-                    messages.info(request, 'Welcome back, %s!' % user.first_name)
+                    messages.success(request, 'Welcome back, %s!' % user.first_name)
                     return redirect('home')
                 else:
                     return HttpResponse('<h1>Your account is disabled</h1>')

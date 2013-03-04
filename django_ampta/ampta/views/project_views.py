@@ -7,6 +7,7 @@ from django.http import HttpResponse, Http404, HttpResponseServerError
 from django.contrib.auth.decorators import login_required
 from ampta.modules.decorators import get_project_if_member
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.contrib import messages
 
 
 @login_required(login_url='/login')
@@ -35,19 +36,20 @@ def show(request, project_id=None, project=None):
 @login_required(login_url='/login')
 def new_create(request):
     if request.method == 'POST':
-        form = ProjectForm(request.user, request.POST)  # exclude current user
+        form = ProjectForm(request.user, request.POST)  # new form, exclude current user
         if form.is_valid():
             form.instance.owner = request.user
             form.instance.date_added = datetime.datetime.today()
             form.instance.date_updated = datetime.datetime.today()
             form.save()
             form.instance.users.add(request.user)  # add owner to project.users. after save.
-            return redirect('projects')
+            messages.info(request, 'Project was created')
+            return redirect(form.instance)  # redirect to created project
     else:
         form = ProjectForm(request.user)  # exclude current user
     return render(request, 'projects/new.html', 
                  {'form': form, 'button': 'Create project', 'header': 'Create project',  
-                 'create_projects_active': True})
+                  'create_projects_active': True})
 
 
 @login_required(login_url='/login')
