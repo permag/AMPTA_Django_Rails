@@ -1,9 +1,18 @@
 {% extends 'shared/base.html' %}
 {% load custom_filters %}
 
-{% block title %}{{block.super}} | {{ ticket.name }}{% endblock%}
+{% block title %}{{block.super}} | {{ ticket.name }}{% endblock %}
 
 {% block content %}
+
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+
 <span class="label label-warning">Ticket</span>
 <h3>{{ ticket.name }}</h3>
 <p>{{ ticket.description }}</p>

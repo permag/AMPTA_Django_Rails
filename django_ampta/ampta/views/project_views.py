@@ -43,7 +43,7 @@ def new_create(request):
             form.instance.date_updated = datetime.datetime.today()
             form.save()
             form.instance.users.add(request.user)  # add owner to project.users. after save.
-            messages.info(request, 'Project was created')
+            messages.success(request, 'Project was created')
             return redirect(form.instance)  # redirect to created project
     else:
         form = ProjectForm(request.user)  # exclude current user
@@ -63,6 +63,7 @@ def edit_update(request, project_id=None):
                     form.instance.date_updated = datetime.datetime.today()
                     form.save()
                     form.instance.users.add(request.user)  # add owner to project.users. after save.
+                    messages.success(request, 'Project was updated')
                     return redirect(project)
                 except:
                     return HttpResponseServerError()
@@ -81,6 +82,7 @@ def delete(request, project_id=None):
         project = get_object_or_404(Project, id=project_id)
         if project.owned_by_user(request.user):
             project.delete()
+            messages.success(request, 'Project "%s" was deleted' % project.name)
             return redirect('projects')
         else:
             return HttpResponse("You don't have permissions to do that.")

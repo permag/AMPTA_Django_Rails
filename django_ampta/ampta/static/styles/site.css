@@ -121,6 +121,14 @@ label {
 .messages {
   font-weight: bold;
 }
+.messages li.info {
+  color: #252625;
+  font-size: 18px;
+}
+.messages li.success {
+  color: #009502;
+  font-size: 18px;
+}
 
 .allProjects a {
   color: white;

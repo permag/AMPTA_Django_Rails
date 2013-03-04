@@ -1,9 +1,18 @@
 {% extends 'shared/base.html' %}
 {% load custom_filters %}
 
-{% block title %}{{block.super}} | Tickets{% endblock%}
+{% block title %}{{block.super}} | Tickets{% endblock %}
 
 {% block content %}
+
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+
 <h3>{{ header }}</h3>
 {% if tickets.count > 0 %}
 <ul>

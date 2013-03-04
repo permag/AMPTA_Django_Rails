@@ -7,6 +7,7 @@ from django.http import HttpResponse, HttpResponseServerError, Http404
 from django.contrib.auth.decorators import login_required
 from ampta.modules.decorators import get_project_if_member, get_ticket_if_member
 from django.utils import simplejson
+from django.contrib import messages
 
 
 @login_required(login_url='/login')
@@ -47,6 +48,7 @@ def new_create(request, project_id=None, project=None):
             form.instance.date_updated = datetime.datetime.today()
             try:
                 form.save()
+                messages.success(request, 'Ticket "%s" was created' % form.instance.name)
                 return redirect(project)
             except:
                 HttpResponseServerError()
@@ -68,6 +70,7 @@ def edit_update(request, project_id=None, ticket_id=None):
                 try:
                     form.instance.date_updated = datetime.datetime.today()
                     form.save()
+                    messages.success(request, 'Ticket was updated')
                     return redirect(ticket)
                 except:
                     return HttpResponseServerError()
@@ -88,6 +91,7 @@ def delete(request, project_id=None, ticket_id=None):
         if project.owned_by_user(user) or ticket.owned_by_user(user):
             try:
                 ticket.delete()
+                messages.success(request, 'Ticket "%s" was deleted' % ticket.name)
                 return redirect(project)
             except:
                 return HttpResponseServerError()
