@@ -9,7 +9,7 @@
 {% for t in tickets %}
 	<li class="allTicketsEach">
 		<a href="{% url project_ticket t.project.id t.id %}">{{ t.name }}</a>
-		<p>{{ t.description|slice:":50" }} ...</p>
+		<p>{{ t.description|slice:":70" }} ...</p>
 		<p><strong>Status:</strong> {{ t.status }}</p>
 		<p><strong>Owner:</strong> <a href="{% url user t.owner.id %}">{{ t.owner.get_full_name }}</a></p>
 		<p>{{ t.start_date|date:"Y-m-d" }} - {{ t.end_date|date:"Y-m-d" }}</p>

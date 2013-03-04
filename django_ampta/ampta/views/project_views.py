@@ -10,10 +10,10 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 
 @login_required(login_url='/login')
-def index(request, page=None):
+def index(request):
     projects = get_list_or_404(Project.objects.order_by('-date_added'))
     paginator = Paginator(projects, 6)  # nr objects/page
-    # page = request.GET.get('p')
+    page = request.GET.get('p')
     try:
         projects = paginator.page(page)
     except PageNotAnInteger:
