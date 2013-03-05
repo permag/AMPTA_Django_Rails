@@ -54,5 +54,19 @@ def date_has_passed(date):
 
     """
     import datetime
+
     return date > datetime.date.today()
+
+
+@register.filter
+def get_hurry_tickets(user):
+    """ Get tickets for which the end date will pass within a few days
+
+    """
+    import datetime
+    from datetime import date, timedelta
+
+    date_from = datetime.date.today()
+    date_to = datetime.date.today() + timedelta(days=3)  # days to add
+    return user.tickets.filter(end_date__range=(date_from, date_to))
 
