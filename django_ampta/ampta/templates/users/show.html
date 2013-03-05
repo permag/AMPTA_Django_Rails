@@ -3,6 +3,15 @@
 {% block title %}{{block.super}} | {{ the_user.get_full_name }}{% endblock %}
 
 {% block content %}
+
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+
 <h3>{{ the_user.get_full_name }}</h3>
 
 <p><strong>Username:</strong> {{ the_user.username }}</p>
@@ -11,4 +20,7 @@
 <p><strong>Last login:</strong> {{ the_user.last_login|timesince }} ago</p>
 <p><strong>Projects:</strong> <span class="badge">{{ the_user.projects.count }}</span></p>
 
+{% if the_user == user %}
+<p><a href="{% url edit_user %}">Change password</a></p>
+{% endif %}
 {% endblock %}

@@ -120,13 +120,19 @@ label {
 
 .messages {
   font-weight: bold;
+  list-style-type: none;
+  margin-left: 0px;
 }
 .messages li.info {
-  color: #252625;
+  color: #626462;
   font-size: 18px;
 }
 .messages li.success {
   color: #009502;
+  font-size: 18px;
+}
+.messages li.error {
+  color: red;
   font-size: 18px;
 }
 

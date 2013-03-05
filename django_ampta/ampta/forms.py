@@ -11,6 +11,7 @@ class LoginForm(forms.Form):
     password = forms.CharField(max_length=40, 
                                widget=forms.PasswordInput(attrs={'placeholder': 'Password'}))
 
+
 class RegisterForm(forms.Form):
     username = forms.CharField(max_length=20, widget=forms.TextInput())
     password = forms.CharField(max_length=40, widget=forms.PasswordInput())
@@ -29,6 +30,21 @@ class RegisterForm(forms.Form):
         if User.objects.filter(email=data).exists():
             raise forms.ValidationError('This e-mail is already registered')
         return data
+
+
+class ChangeUserPasswordForm(forms.Form):
+    password_current = forms.CharField(max_length=40, 
+                                       widget=forms.PasswordInput(attrs={'placeholder': 'Current password'}))
+    password = forms.CharField(max_length=40, 
+                               widget=forms.PasswordInput(attrs={'placeholder': 'New password'}))
+    password2 = forms.CharField(max_length=40, 
+                                widget=forms.PasswordInput(attrs={'placeholder': 'New password again'}))
+
+    def clean_password2(self):
+        password = self.cleaned_data['password']
+        password2 = self.cleaned_data['password2']
+        if not password == password2:
+            raise forms.ValidationError('Field did not match new password')
 
 
 class ProjectForm(ModelForm):

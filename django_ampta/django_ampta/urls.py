@@ -27,11 +27,13 @@ urlpatterns += patterns('ampta.views.views',
     # logout
     url(r'^logout/$', 'logout_user', name='logout'),
     # register
-    url(r'^register/$', 'create_user', name='create_user'),
+    url(r'^register/$', 'new_create_user', name='new_user'),
     # users
     url(r'^users/$', 'user_index', name='users'),
     # users/1
     url(r'^users/(?P<user_id>\d+)/$', 'user_show', name='user'),
+    # users/edit
+    url(r'^users/edit/$', 'edit_update_user', name='edit_user'),
 )
 
 # Project views
