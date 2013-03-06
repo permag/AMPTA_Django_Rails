@@ -188,3 +188,26 @@ div.ui-datepicker{
   float: left;
   clear: both;
 }
+
+.projectConversation {
+  font-size: 12px;
+  max-height: 300px;
+  overflow: auto;
+  margin-bottom: 11px;
+}
+.projectConversation li {
+  margin-bottom: 5px;
+  background: #d7dcd7;
+  padding: 2px 5px;
+  width: 500px;
+}
+.projectConversation p {
+  margin: 0;
+}
+.commentTextarea textarea {
+  width: 300px;
+  height: 40px;
+  margin-left: 40px;
+}
+.commentText {
+}

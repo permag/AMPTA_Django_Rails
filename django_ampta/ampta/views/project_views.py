@@ -1,7 +1,7 @@
 from django.shortcuts import get_list_or_404, get_object_or_404, render, redirect
-from ampta.models import Project
+from ampta.models import Project, Comment
 from django.contrib.auth.models import User
-from ampta.forms import ProjectForm
+from ampta.forms import ProjectForm, CommentForm
 import datetime
 from django.http import HttpResponse, Http404, HttpResponseServerError
 from django.contrib.auth.decorators import login_required
@@ -30,7 +30,9 @@ def index(request):
 def show(request, project_id=None, project=None):
     if not project:
         project = get_object_or_404(Project, id=project_id)
-    return render(request, 'projects/show.html', {'project': project})
+    comment_form = CommentForm()
+    return render(request, 'projects/show.html', 
+                 {'project': project, 'comment_form': comment_form})
 
 
 @login_required(login_url='/login')
@@ -84,6 +86,43 @@ def delete(request, project_id=None):
             project.delete()
             messages.success(request, 'Project "%s" was deleted' % project.name)
             return redirect('projects')
+        else:
+            return HttpResponse("You don't have permissions to do that.")
+    else:
+        raise Http404
+
+
+@login_required(login_url='/login')
+def create_comment(request, project_id=None):
+    if request.method == 'POST':
+        project = get_object_or_404(Project, id=project_id)
+        if project.has_user(request.user):
+            form = CommentForm(request.POST)
+            if form.is_valid():
+                form.instance.owner = request.user
+                form.instance.project = project
+                form.instance.comment_date = datetime.datetime.today()
+                try:
+                    form.save()
+                    messages.success(request, 'Comment was created')
+                    return redirect(project)
+                except:
+                    return HttpResponseServerError()
+        else:
+            return HttpResponse("You don't have permissions to do that.")
+    else:
+        raise Http404
+
+
+@login_required(login_url='/login')
+def delete_comment(request, project_id=None, comment_id=None):
+    if request.method == 'POST':
+        comment = get_object_or_404(Comment, id=comment_id)
+        project = comment.project
+        if comment.owner == request.user:
+            comment.delete()
+            messages.success(request, 'Comment was deleted')
+            return redirect(project)
         else:
             return HttpResponse("You don't have permissions to do that.")
     else:

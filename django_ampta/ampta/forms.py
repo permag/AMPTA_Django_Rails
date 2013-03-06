@@ -2,7 +2,7 @@ from django.forms import ModelForm
 from django import forms
 import datetime
 from django.contrib.auth.models import User
-from ampta.models import Project, Ticket
+from ampta.models import Project, Ticket, Comment
 
 
 class LoginForm(forms.Form):
@@ -85,3 +85,13 @@ class TicketForm(ModelForm):
     #     if end_date <= self.cleaned_data['start_date']:
     #         raise forms.ValidationError('End date must be later than start date')
     #     return end_date
+
+
+class CommentForm(ModelForm):
+    comment = forms.CharField(max_length=999, widget=forms.Textarea(attrs={'placeholder': 'Comment ...'}))
+
+    class Meta:
+        model = Comment
+        exclude = ('comment_date', 'owner', 'project')
+
+

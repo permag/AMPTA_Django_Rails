@@ -68,4 +68,30 @@
 
 {% endif %}
 
+<h4>Project conversation</h4>
+<div class="projectConversation">
+	{% if project.comments.count == 0 %}
+	<p>No comments.</p>
+	{% endif %}
+	<ul>
+	{% for c in project.comments.all %}
+		<li>
+			<p>
+				<a href="{% url user c.owner.id %}">{{ c.owner }}</a> {{ c.comment_date|timesince }} ago
+				{% if c.owner == user %}
+				<form action="{% url delete_project_comment project.id c.id %}" method="POST" class="pull-right">{% csrf_token %}
+					<input type="submit" value="x" class="confirmDelete" />
+				</form>
+				{% endif %}
+			</p>
+			<p class="commentText">{{ c.comment }}</p>
+		</li>
+	{% endfor %}
+	</ul>
+</div>
+<form action="{% url create_project_comment project.id %}" method="POST">{% csrf_token %}
+	<span class="commentTextarea">{{ comment_form.comment }}</span>
+	<input type="submit" value="Send" clas="btn" />
+</form>
+
 {% endblock %}

@@ -40,8 +40,8 @@ class Status(models.Model):
 class Ticket(models.Model):
     name = models.CharField(max_length=30)
     description = models.TextField()
-    start_date = models.DateField();
-    end_date = models.DateField();
+    start_date = models.DateField()
+    end_date = models.DateField()
     status = models.ForeignKey(Status, related_name='tickets')
     project = models.ForeignKey(Project, related_name='tickets')
     owner = models.ForeignKey(User, related_name='tickets')
@@ -64,4 +64,12 @@ class Ticket(models.Model):
     #     return data
 
 
+class Comment(models.Model):
+    comment = models.CharField(max_length=999)
+    comment_date = models.DateTimeField()
+    owner = models.ForeignKey(User, related_name='comments')
+    project = models.ForeignKey(Project, related_name='comments')
+
+    def __unicode__(self):
+        return '%s ...' % self.comment[:12]
 

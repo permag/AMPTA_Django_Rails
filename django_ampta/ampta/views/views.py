@@ -111,7 +111,7 @@ def edit_update_user(request):
                 try:
                     user.save()
                     messages.success(request, 'Your password was updated')
-                    return redirect('/users/%s' % user.id)
+                    return redirect('/users/%i' % user.id)
                 except:
                     return HttpResponseServerError()
             else:
@@ -119,5 +119,5 @@ def edit_update_user(request):
                 return redirect('edit_user')
     else:
         form = ChangeUserPasswordForm()
-    return render(request, 'users/edit_password.html', 
-                 {'form': form, 'header': 'Edit profile', 'button': 'Update profile'})
+    return render(request, 'users/edit_password.html', {'form': form})
+
