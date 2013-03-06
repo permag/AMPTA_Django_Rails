@@ -70,3 +70,15 @@ def get_hurry_tickets(user):
     date_to = datetime.date.today() + timedelta(days=3)  # days to add
     return user.tickets.filter(end_date__range=(date_from, date_to))
 
+
+@register.filter
+def get_latest_comments(user):
+    """ Get latest comments for all projects that current user is member of
+
+    """
+    from ampta.models import Comment
+
+    return (Comment.objects.filter(project__users=user)
+                           .order_by('-comment_date')[:7])
+
+

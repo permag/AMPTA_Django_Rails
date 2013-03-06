@@ -76,7 +76,7 @@
 	<ul>
 	{% for c in project.comments.all %}
 		<li>
-			<p>
+			<p id="comment{{ c.id }}">
 				<a href="{% url user c.owner.id %}">{{ c.owner }}</a> {{ c.comment_date|timesince }} ago
 				{% if c.owner == user %}
 				<form action="{% url delete_project_comment project.id c.id %}" method="POST" class="pull-right">{% csrf_token %}

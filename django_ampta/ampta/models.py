@@ -71,5 +71,8 @@ class Comment(models.Model):
     project = models.ForeignKey(Project, related_name='comments')
 
     def __unicode__(self):
-        return '%s ...' % self.comment[:12]
+        return '%s ...' % self.comment[:18]
+
+    def owned_by_user(self, user):
+        return self.owner == user
 

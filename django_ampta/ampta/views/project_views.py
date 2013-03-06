@@ -119,7 +119,7 @@ def delete_comment(request, project_id=None, comment_id=None):
     if request.method == 'POST':
         comment = get_object_or_404(Comment, id=comment_id)
         project = comment.project
-        if comment.owner == request.user:
+        if comment.owned_by_user(request.user):
             comment.delete()
             messages.success(request, 'Comment was deleted')
             return redirect(project)

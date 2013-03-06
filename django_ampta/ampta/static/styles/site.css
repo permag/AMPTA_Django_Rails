@@ -200,6 +200,7 @@ div.ui-datepicker{
   background: #d7dcd7;
   padding: 2px 5px;
   width: 500px;
+  border-left: 4px solid transparent;
 }
 .projectConversation p {
   margin: 0;
@@ -210,4 +211,8 @@ div.ui-datepicker{
   margin-left: 40px;
 }
 .commentText {
+}
+
+.latestComments li {
+  font-size: 12px;
 }

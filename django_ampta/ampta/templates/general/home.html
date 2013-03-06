@@ -29,4 +29,16 @@
 
 {% endif %}
 
+<div class="latestComments pull-right">
+	<h5>Latest comments</h5>
+	<ul>
+	{% for c in user|get_latest_comments %}
+		<li><a href="{% url project c.project.id %}#comment{{ c.id }}">{{ c }}</a>
+			by <a href="{% url user c.owner.id %}">{{ c.owner }}</a>
+			{{ c.comment_date|timesince }} ago
+		</li>
+	{% endfor %}
+	</ul>
+</div>
+
 {% endblock %}
