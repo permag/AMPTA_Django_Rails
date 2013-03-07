@@ -19,14 +19,11 @@
 
 <p><a href="{% url new_project_ticket project.id %}" class="btn">New ticket</a></p>
 
-<h4>Start</h4>
-<p>{{ project.start_date }}</p>
-
-
-<h4>End</h4>
-<p>{{ project.end_date }}</p>
+<h4>Timespan</h4>
+<p>{{ project.start_date }} - {{ project.end_date }}</p>
 
 <h4>Tickets</h4>
+
 {% if project.tickets.count %}
 <ul>
 	{% for t in project.tickets.all %}
@@ -60,7 +57,6 @@
 
 {% if project|project_owned_by_user:user %}
 
-
 <form action="{% url delete_project project.id %}" method="POST">{% csrf_token %}
 	<a href="{% url edit_project project.id %}" class="btn">Edit</a>
 	<input type="submit" value="Delete" class="confirmDelete btn" />
@@ -68,7 +64,7 @@
 
 {% endif %}
 
-<h4>Project conversation</h4>
+<h4>Conversation</h4>
 <div class="projectConversation">
 	{% if project.comments.count == 0 %}
 	<p>No comments.</p>
@@ -91,7 +87,7 @@
 </div>
 <form action="{% url create_project_comment project.id %}" method="POST">{% csrf_token %}
 	<span class="commentTextarea">{{ comment_form.comment }}</span>
-	<input type="submit" value="Send" clas="btn" />
+	<input type="submit" value="Send" class="btn" />
 </form>
 
 {% endblock %}

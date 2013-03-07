@@ -24,7 +24,6 @@ $(function(){
 		li.css({'border-left': '4px solid orange'})
 		li.css({'backgroundColor': '#bbb'});
 		window.setTimeout(function(){
-			//li.animate().css({'background': originalBackground});
 			li.animate({
 				backgroundColor: originalBackground
 			}, 'slow');

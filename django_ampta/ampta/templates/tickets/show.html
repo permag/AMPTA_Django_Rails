@@ -17,16 +17,11 @@
 <h3>{{ ticket.name }}</h3>
 <p>{{ ticket.description }}</p>
 
-<h4>
-	Belongs to:
-	<span><a href="{% url project ticket.project.id %}">{{ ticket.project.name }}</a></span>
-</h4>
+<h4>Project</h4>
+<p><a href="{% url project ticket.project.id %}">{{ ticket.project.name }}</a></p>
 
-<h4>Start</h4>
-<p>{{ ticket.start_date }}</p>
-
-<h4>End</h4>
-<p>{{ ticket.end_date }}</p>
+<h4>Timespan</h4>
+<p>{{ ticket.start_date }} - {{ ticket.end_date }}</p>
 
 <h4>Status</h4>
 <p>{{ ticket.status.status_name }}</p>
